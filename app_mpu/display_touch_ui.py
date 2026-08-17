@@ -1,6 +1,7 @@
 """
-NeuroSign-HMI Max: SmartElex 5" Capacitive Touch Display UI (800x480)
-Renders live video overlay, skeletal hand tracking, recognized speech subtitles,
+NeuroSign-HMI: SmartElex 5" Capacitive Touch Display UI (800x480)
+Renders real-time live camera feed, dynamic subtitle ribbons,
+skeletal hand tracking, recognized speech subtitles,
 sensor metrics HUD, and interactive touch controls.
 """
 

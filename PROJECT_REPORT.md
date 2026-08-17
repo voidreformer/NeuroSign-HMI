@@ -1,4 +1,4 @@
-# NeuroSign-HMI Max: Edge-Native Multi-Modal Assistive Communicator & Smart Environmental Controller
+# NeuroSign-HMI: Edge-Native Multi-Modal Assistive Communicator & Smart Environmental Controller
 **Track**: Robotics & Interactive AI / Smart Homes & Consumer AI  
 **Platform**: Arduino UNO Q 4GB (Qualcomm Dragonwing QRB2210 MPU + STM32U585 MCU)  
 **Submission**: Arduino Physical AI Challenge India 2026  
@@ -6,7 +6,7 @@
 ---
 
 ## 1. Executive Summary & Abstract
-NeuroSign-HMI Max is an edge-native, real-time sign language interpreter and ambient assistive control station engineered for individuals with speech, hearing, and severe motor impairments. Powered by the dual-brain hybrid architecture of the **Arduino UNO Q (4GB LPDDR4X)**, the system performs local 60 FPS 3D hand-landmark extraction and 1D-LSTM neural sequence classification accelerated directly on the **Qualcomm Adreno 702 GPU via OpenCL delegates**, completely eliminating cloud dependency, recurring subscription costs, and external privacy vulnerabilities. 
+NeuroSign-HMI is an edge-native, real-time sign language interpreter and ambient assistive control station engineered for individuals with speech, hearing, and severe motor impairments. Powered by the dual-brain hybrid architecture of the **Arduino UNO Q (4GB LPDDR4X)**, the system performs local 60 FPS 3D hand-landmark extraction and 1D-LSTM neural sequence classification accelerated directly on the **Qualcomm Adreno 702 GPU via OpenCL delegates**, completely eliminating cloud dependency, recurring subscription costs, and external privacy vulnerabilities. 
 
 Dynamic gestures are translated into synthesized audio speech (I2S MAX98357A amplifier), real-time on-screen subtitles on an 800×480 capacitive touch interface, dynamic 8×13 LED Matrix visual glyphs, and physical actuation of home appliances (relays and closed-loop camera pan-tilt servos). In critical emergencies, the station orchestrates an offline, multi-channel distress protocol via an integrated **SIM800C GSM cellular module** and strobe relays.
 
@@ -18,7 +18,7 @@ Over 430 million people worldwide experience disabling hearing loss, with millio
 2. **Cloud Vulnerability**: Cloud-based vision systems violate home privacy and fail during internet outages.
 3. **Emergency Helplessness**: Bedridden or speech-impaired patients cannot trigger conventional voice-operated smart assistants during sudden distress.
 
-**NeuroSign-HMI Max delivers 100% offline, privacy-guaranteed, sub-50ms latency interaction** with physical actuators and emergency cellular networks.
+**NeuroSign-HMI delivers 100% offline, privacy-guaranteed, sub-50ms latency interaction** with physical actuators and emergency cellular networks.
 
 ---
 
@@ -122,4 +122,4 @@ The Arduino UNO Q bridges high-throughput neural vision processing with determin
 ---
 
 ## 8. Conclusion
-NeuroSign-HMI Max demonstrates the full transformative potential of the **Arduino UNO Q** platform. By fusing Qualcomm's edge AI compute with STM32's hard real-time determinism, it delivers a life-changing, offline, private, and robust physical AI station ready for immediate real-world deployment.
+NeuroSign-HMI demonstrates the full transformative potential of the **Arduino UNO Q** platform. By fusing Qualcomm's edge AI compute with STM32's hard real-time determinism, it delivers a life-changing, offline, private, and robust physical AI station ready for immediate real-world deployment.

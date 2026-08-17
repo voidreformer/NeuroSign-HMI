@@ -1,7 +1,7 @@
 """
-NeuroSign-HMI Max: High-Speed Vision Pipeline
-Captures 60 FPS MIPI-CSI video from the Raspberry Pi Camera Module 3 (Sony IMX708)
-over the 4-lane JMEDIA interface with hardware ISP processing.
+NeuroSign-HMI: High-Speed Vision Pipeline
+Captures 60 FPS video streams from Raspberry Pi Camera Module 3 over MIPI-CSI (1.8V domain)
+and provides frame buffers for MediaPipe 3D landmark extraction on the Qualcomm Dragonwing MPU.
 """
 
 import time

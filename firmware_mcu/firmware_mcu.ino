@@ -1,5 +1,5 @@
 // ==============================================================================
-// NeuroSign-HMI Max: STM32U585 Microcontroller Firmware (Zephyr RTOS / Arduino Core)
+// NeuroSign-HMI: STM32U585 Microcontroller Firmware (Zephyr RTOS / Arduino Core)
 // Handles: HLK-LD2410C Radar, SG90 Pan-Tilt, SIM800C GSM, Sensor Bus,
 //          8x13 LED Matrix, Opto-Relays, and MessagePack IPC Bridge
 // ==============================================================================
@@ -115,7 +115,7 @@ void report_sensor_telemetry() {
 void setup() {
     Serial.begin(115200);
     Serial.println("==============================================");
-    Serial.println(" NeuroSign-HMI Max — STM32U585 Firmware v1.0");
+    Serial.println(" NeuroSign-HMI — STM32U585 Firmware v1.0");
     Serial.println("==============================================");
 
     // Initialize IPC Bridge to Qualcomm MPU

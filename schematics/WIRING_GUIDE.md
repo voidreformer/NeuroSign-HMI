@@ -1,6 +1,6 @@
-# NeuroSign-HMI Max: Complete Hardware Wiring & Electrical Pinout Guide
+# NeuroSign-HMI: Complete Hardware Wiring & Electrical Pinout Guide
 
-This document defines the exact hardware connections, power distribution, and logic-level isolation rules for the **NeuroSign-HMI Max** assistive workstation on the **Arduino UNO Q (4GB)**.
+This document defines the exact hardware connections, power distribution, and logic-level isolation rules for the **NeuroSign-HMI** assistive workstation on the **Arduino UNO Q (4GB)**.
 
 ---
 

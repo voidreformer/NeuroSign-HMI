@@ -1,5 +1,5 @@
 # ==============================================================================
-# NeuroSign-HMI Max: Production Docker Environment for Arduino App Lab (UNO Q)
+# NeuroSign-HMI: Production Docker Environment for Arduino App Lab (UNO Q)
 # Base: Debian Bookworm Slim with OpenCV, TensorFlow Lite GPU Delegates, & Piper TTS
 # ==============================================================================
 

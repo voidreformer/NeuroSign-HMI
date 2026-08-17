@@ -1,5 +1,5 @@
 """
-NeuroSign-HMI Max: Digital I2S Audio Subsystem
+NeuroSign-HMI: Digital I2S Audio Subsystem
 Manages bidirectional audio across the INMP441 Microphone (Speech-to-Text)
 and MAX98357A I2S Amplifier (Piper Offline Text-to-Speech Engine).
 """

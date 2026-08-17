@@ -1,5 +1,5 @@
 """
-NeuroSign-HMI Max: Inter-Processor Communication (IPC) Bridge
+NeuroSign-HMI: Inter-Processor Communication (IPC) Bridge
 Manages low-overhead MessagePack RPC over /var/run/arduino-router.sock
 connecting the Qualcomm Dragonwing MPU (Linux) and STM32U585 MCU (Zephyr RTOS).
 """

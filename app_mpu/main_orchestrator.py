@@ -1,5 +1,5 @@
 """
-NeuroSign-HMI Max: Master Linux MPU Orchestrator Daemon
+NeuroSign-HMI: Master Linux MPU Orchestrator Daemon
 Integrates 60 FPS Video, Digital I2S Audio (TTS/STT), SmartElex 5" Touch UI,
 Edge AI Gesture Classification (Nemotron-generated), and MessagePack IPC Bridge
 for real-time dual-brain coordination on Arduino UNO Q (4GB LPDDR4X).
@@ -25,7 +25,7 @@ logger = logging.getLogger("Main_Orchestrator")
 class NeuroSignOrchestrator:
     def __init__(self):
         logger.info("=======================================================")
-        logger.info("   Starting NeuroSign-HMI Max Orchestration Engine     ")
+        logger.info("   Starting NeuroSign-HMI Orchestration Engine         ")
         logger.info("   Arduino UNO Q (Qualcomm QRB2210 + STM32U585 Dual-Brain)")
         logger.info("=======================================================")
 
@@ -182,7 +182,7 @@ class NeuroSignOrchestrator:
 
                 # 5. Render the 800x480 Touch UI canvas with annotated frame
                 ui_canvas = self.ui.render_frame(annotated_frame)
-                cv2.imshow("NeuroSign-HMI Max UI", ui_canvas)
+                cv2.imshow("NeuroSign-HMI UI", ui_canvas)
                 key = cv2.waitKey(1) & 0xFF
                 if key == 27 or key == ord('q'):
                     break

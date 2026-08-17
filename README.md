@@ -1,11 +1,11 @@
-# NeuroSign-HMI Max: Edge-Native Multi-Modal Assistive Station
+# NeuroSign-HMI: Edge-Native Multi-Modal Assistive Station
 ### *Submission for the Arduino Physical AI Challenge India 2026*
 **Track**: Robotics & Interactive AI
 
 ---
 
 ## 🌟 Executive Overview
-**NeuroSign-HMI Max** is a next-generation, edge-native assistive communication and smart-home automation station engineered specifically for the **Arduino UNO Q (4GB)**. 
+**NeuroSign-HMI** is a next-generation, edge-native assistive communication and smart-home automation station engineered specifically for the **Arduino UNO Q (4GB)**. 
 
 Designed for individuals with speech, hearing, or motor impairments, the system bridges physical gesture expression with real-world voice synthesis, visual subtitles, appliance control, and emergency cellular alerts—**executing 100% locally on the edge with zero cloud dependencies**.
 
