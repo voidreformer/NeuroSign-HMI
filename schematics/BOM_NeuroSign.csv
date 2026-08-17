@@ -1,0 +1,17 @@
+Item_Index,Component_Name,Exact_Part_Number,Manufacturer_Supplier,Quantity,Unit_Cost_INR,Interface_Type,Functional_Description
+01,Primary SBC Platform,Arduino UNO Q 4GB (ABX00173),Arduino / Robu.in,1,11499,Core Compute,Dual-Brain MPU (Qualcomm QRB2210) + MCU (STM32U585)
+02,Optical Camera Module,Raspberry Pi Camera Module 3 (IMX708),Raspberry Pi / Robu.in,1,2899,MIPI-CSI (JMEDIA),12MP Autofocus 60 FPS gesture input
+03,Capacitive Touch Display,SmartElex 5" TFT Touch (800x480),SmartElex / Robu.in,1,2499,MIPI-DSI / I2C,Interactive UI and sign language subtitles
+04,Digital I2S Microphone,INMP441 MEMS Omnidirectional,InvenSense / Robu.in,1,189,I2S (JMISC),Digital audio capture for speech-to-text
+05,Digital I2S Amplifier,DFRobot MAX98357A 3.2W Amp,DFRobot / Maxim,1,349,I2S (JMISC),Digital-to-Analog voice synthesis output (TTS)
+06,Acoustic Transducer,3W 4-Ohm Full Range Speaker,Generic / Robu.in,1,99,Analog Differential,Vocalized audio playback
+07,Millimeter Wave Radar,HLK-LD2410C-P 24GHz Radar,Hi-Link / Robu.in,1,449,UART2 / GPIO (D0/D1/D2),Micro-motion & user presence auto-wake
+08,Cellular GSM Module,SIM800C GSM/GPRS Quad-Band,SIMCom / Robu.in,1,599,UART3 (D8/D11),Offline SMS emergency alert transmitter
+09,Pan-Tilt Servo Actuators,TowerPro SG90 Micro Servo 9g,TowerPro / Robu.in,2,240,PWM (D9/D10),Dynamic camera framing & tracking
+10,Optical Isolated Relays,2-Channel 5V Relay Module,Songle / Robu.in,1,120,Digital GPIO (D6/D7),Smart home lights and emergency siren
+11,Digital Power Monitor,INA219 High-Side I2C Sensor,Texas Instruments,1,175,Qwiic I2C,Real-time current voltage and power tracking
+12,Air Quality VOC Sensor,GY-SGP40 Gas Sensor,Sensirion / Robu.in,1,799,Qwiic I2C,Environmental VOC and room air quality
+13,6-Axis Motion Sensor,MPU-6050 Accelerometer/Gyro,InvenSense / Robu.in,1,149,Qwiic I2C,Vibration and tilt stability detection
+14,Temperature & Humidity,DHT22 / AM2302 Digital Sensor,Aosong / Robu.in,1,299,Single-Bus (D4),Ambient climate telemetry
+15,Logic Level Shifter,TXU0104 4-Bit Directional Shifter,Texas Instruments,2,190,Logic Shifter,1.8V to 3.3V bidirectional audio/data translation
+16,DC-DC Step Down Buck,LM2596 Multi-Output Buck Converter,Texas Instruments,2,220,Power Rail,Stable 5V (Arduino/Relays) and 4V (SIM800C)

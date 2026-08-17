@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  neurosign-mpu-engine:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: neurosign_engine
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    devices:
+      - "/dev/video0:/dev/video0"
+      - "/dev/snd:/dev/snd"
+      - "/dev/dri:/dev/dri"
+    volumes:
+      - "/var/run/arduino-router.sock:/var/run/arduino-router.sock"
+      - "/tmp/.X11-unix:/tmp/.X11-unix"
+      - "../app_mpu:/app/app_mpu"
+      - "../models:/app/models"
+    environment:
+      - DISPLAY=:0
+      - PYTHONUNBUFFERED=1
+      - ALSA_CARD=default

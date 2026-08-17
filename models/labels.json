@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "gesture_count": 7,
+  "confidence_threshold": 0.85,
+  "window_frames": 30,
+  "labels": {
+    "0": "Emergency - Need Help",
+    "1": "Turn On Room Light",
+    "2": "Turn Off Room Light",
+    "3": "Water Please",
+    "4": "Thank You",
+    "5": "Yes",
+    "6": "No"
+  },
+  "gestures": [
+    "Emergency - Need Help",
+    "Turn On Room Light",
+    "Turn Off Room Light",
+    "Water Please",
+    "Thank You",
+    "Yes",
+    "No"
+  ],
+  "action_map": {
+    "Emergency - Need Help": "emergency_sos",
+    "Turn On Room Light": "relay_1_on",
+    "Turn Off Room Light": "relay_1_off",
+    "Water Please": "speak_water",
+    "Thank You": "speak_thanks",
+    "Yes": "speak_yes",
+    "No": "speak_no"
+  }
+}
