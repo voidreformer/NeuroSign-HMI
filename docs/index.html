@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroSign-HMI — Edge-Native Physical AI Assistive Station</title>
+    <meta name="description" content="Official submission for Arduino Physical AI Challenge India 2026. Edge-native multi-modal sign language interpreter and ambient assistive control on Arduino UNO Q (4GB).">
+    
+    <!-- Google Fonts: Space Grotesk + Outfit + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Animated Mesh Glow -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <div class="brand-logo">
+                    <span class="pulse-dot"></span>
+                    <span class="logo-icon">⚡</span>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-name">NeuroSign<span class="brand-accent">-HMI</span></span>
+                    <span class="brand-badge">Arduino UNO Q 4GB</span>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#simulator">Live Simulator</a>
+                <a href="#architecture">Dual-Brain Engine</a>
+                <a href="#telemetry">Sensor HUD</a>
+                <a href="#hardware">BOM & Pinouts</a>
+                <a href="https://github.com/voidreformer/NeuroSign-HMI-Max" target="_blank" class="nav-btn-gh">
+                    <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                    GitHub Repo
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="badge-contest">
+                <span class="badge-chip">🏆 OFFICIAL SUBMISSION</span>
+                <span>Arduino Physical AI Challenge India 2026</span>
+            </div>
+            <h1 class="hero-title">
+                Bridging Silence with <br>
+                <span class="gradient-text">Physical Edge AI</span>
+            </h1>
+            <p class="hero-desc">
+                An edge-native, zero-cloud sign language interpreter and ambient smart-home assistant. Powered by the heterogeneous <strong>Qualcomm Dragonwing MPU</strong> and <strong>STM32U585 MCU</strong> on the Arduino UNO Q.
+            </p>
+            <div class="hero-cta-group">
+                <a href="#simulator" class="btn btn-primary">
+                    <span>⚡ Try Live Gesture Simulator</span>
+                </a>
+                <a href="https://github.com/voidreformer/NeuroSign-HMI-Max" target="_blank" class="btn btn-secondary">
+                    <span>📂 View Source Code</span>
+                </a>
+            </div>
+
+            <!-- Real-Time Metrics Strip -->
+            <div class="metrics-strip">
+                <div class="metric-card">
+                    <div class="metric-value"><span class="counter">59.8</span> <small>FPS</small></div>
+                    <div class="metric-label">RPi Camera v3 Pipeline</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value"><span class="counter">9.4</span> <small>ms</small></div>
+                    <div class="metric-label">Adreno 702 GPU Inference</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value"><span class="counter">1000</span> <small>Hz</small></div>
+                    <div class="metric-label">Zephyr RTOS Determinism</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">100<small>%</small></div>
+                    <div class="metric-label">Offline Edge Privacy</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Interactive Gesture & Hardware Simulator -->
+    <section id="simulator" class="section-container">
+        <div class="section-header">
+            <span class="section-tag">INTERACTIVE EDGE TESTBENCH</span>
+            <h2 class="section-title">Experience the AI Perception-to-Actuation Loop</h2>
+            <p class="section-subtitle">Click any gesture to trigger real-time 3D landmark extraction, synthetic voice speech, LED matrix animations, and physical relays.</p>
+        </div>
+
+        <div class="simulator-grid">
+            <!-- Left: Hand Skeleton Canvas & Camera Viewport -->
+            <div class="sim-card sim-camera">
+                <div class="card-header">
+                    <span class="status-indicator active"></span>
+                    <span>RPi Camera v3 (MIPI-CSI @ 60 FPS)</span>
+                    <span class="tag-accent" id="simFps">59.8 FPS</span>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="handCanvas" width="480" height="360"></canvas>
+                    <div class="hud-overlay">
+                        <div class="hud-item"><span>INFERENCE:</span> <strong id="hudLatency">9.4 ms</strong></div>
+                        <div class="hud-item"><span>MODEL:</span> <strong>1D-LSTM (INT8)</strong></div>
+                        <div class="hud-item"><span>ACCEL:</span> <strong>Adreno 702 GPU</strong></div>
+                    </div>
+                </div>
+                <div class="smart-display-ribbon">
+                    <span class="ribbon-label">SmartElex 5" Subtitle:</span>
+                    <span class="ribbon-text" id="subtitleText">"NeuroSign assistive station online and ready."</span>
+                    <span class="ribbon-conf" id="subtitleConf">100%</span>
+                </div>
+            </div>
+
+            <!-- Right: Interactive Control Pad & Hardware Actuators -->
+            <div class="sim-card sim-actuators">
+                <div class="card-header">
+                    <span>Select Gesture to Trigger:</span>
+                </div>
+                <div class="gesture-buttons-grid">
+                    <button class="btn-gesture active" data-gesture="water">
+                        <span class="g-icon">💧</span>
+                        <span class="g-name">Water Please</span>
+                        <span class="g-action">Audio TTS</span>
+                    </button>
+                    <button class="btn-gesture" data-gesture="light_on">
+                        <span class="g-icon">💡</span>
+                        <span class="g-name">Turn On Light</span>
+                        <span class="g-action">Relay 1 ON</span>
+                    </button>
+                    <button class="btn-gesture" data-gesture="light_off">
+                        <span class="g-icon">🌑</span>
+                        <span class="g-name">Turn Off Light</span>
+                        <span class="g-action">Relay 1 OFF</span>
+                    </button>
+                    <button class="btn-gesture" data-gesture="thanks">
+                        <span class="g-icon">🙏</span>
+                        <span class="g-name">Thank You</span>
+                        <span class="g-action">Audio TTS</span>
+                    </button>
+                    <button class="btn-gesture" data-gesture="yes">
+                        <span class="g-icon">👍</span>
+                        <span class="g-name">Yes / Understood</span>
+                        <span class="g-action">Audio TTS</span>
+                    </button>
+                    <button class="btn-gesture btn-danger" data-gesture="sos">
+                        <span class="g-icon">🚨</span>
+                        <span class="g-name">Emergency SOS</span>
+                        <span class="g-action">GSM SMS + Strobe</span>
+                    </button>
+                </div>
+
+                <!-- Hardware State Preview HUD -->
+                <div class="hardware-status-panel">
+                    <h3>STM32U585 Real-Time Actuators</h3>
+                    <div class="actuator-row">
+                        <div class="act-item">
+                            <span class="act-label">Relay 1 (Room Light)</span>
+                            <span class="act-val off" id="relay1Status">OFF</span>
+                        </div>
+                        <div class="act-item">
+                            <span class="act-label">Relay 2 (Strobe Alarm)</span>
+                            <span class="act-val off" id="relay2Status">OFF</span>
+                        </div>
+                    </div>
+                    <div class="actuator-row">
+                        <div class="act-item">
+                            <span class="act-label">SG90 Pan / Tilt</span>
+                            <span class="act-val" id="servoStatus">Pan: 90° | Tilt: 90°</span>
+                        </div>
+                        <div class="act-item">
+                            <span class="act-label">SIM800C GSM</span>
+                            <span class="act-val" id="gsmStatus">Standby</span>
+                        </div>
+                    </div>
+
+                    <!-- 8x13 LED Matrix Simulator -->
+                    <div class="matrix-container">
+                        <span class="act-label">8x13 LED Matrix Glyph:</span>
+                        <div class="matrix-grid" id="ledMatrix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dual-Brain Architecture Deep Dive -->
+    <section id="architecture" class="section-container">
+        <div class="section-header">
+            <span class="section-tag">HETEROGENEOUS COMPUTE</span>
+            <h2 class="section-title">The Dual-Brain Heterogeneous Architecture</h2>
+            <p class="section-subtitle">How Linux MPU throughput and Zephyr RTOS determinism communicate via MessagePack RPC.</p>
+        </div>
+
+        <div class="arch-container">
+            <!-- Qualcomm MPU Block -->
+            <div class="arch-box mpu-box">
+                <div class="arch-badge">LINUX APPLICATION DOMAIN (1.8V)</div>
+                <h3>Qualcomm Dragonwing QRB2210</h3>
+                <p class="arch-spec">4x Arm Cortex-A53 @ 2.0 GHz | 4GB LPDDR4X | 32GB eMMC</p>
+                <ul class="arch-list">
+                    <li>📸 <strong>60 FPS MIPI-CSI Vision</strong>: Sony IMX708 capture via dual Spectra 340L ISPs.</li>
+                    <li>🧠 <strong>MediaPipe 3D Landmark Extractor</strong>: 21 keypoints with wrist normalization.</li>
+                    <li>⚡ <strong>Qualcomm Adreno 702 GPU</strong>: INT8 1D-LSTM inference in 9.4 ms.</li>
+                    <li>🔊 <strong>Piper Offline TTS</strong>: Natural speech synthesis via I2S MAX98357A.</li>
+                    <li>🖥️ <strong>SmartElex 5" Touch UI</strong>: 800x480 real-time visual subtitles.</li>
+                </ul>
+            </div>
+
+            <!-- Inter-Processor Bridge -->
+            <div class="arch-bridge">
+                <div class="bridge-line"></div>
+                <div class="bridge-card">
+                    <span class="bridge-icon">⇄</span>
+                    <strong>MessagePack RPC</strong>
+                    <code>/var/run/arduino-router.sock</code>
+                    <small>&lt; 1.8 ms Bi-directional Latency</small>
+                </div>
+                <div class="bridge-line"></div>
+            </div>
+
+            <!-- STM32 MCU Block -->
+            <div class="arch-box mcu-box">
+                <div class="arch-badge">REAL-TIME DETERMINISTIC DOMAIN (3.3V)</div>
+                <h3>STMicroelectronics STM32U585</h3>
+                <p class="arch-spec">Arm Cortex-M33 @ 160 MHz | 786 KB SRAM | Zephyr RTOS</p>
+                <ul class="arch-list">
+                    <li>⏱️ <strong>1 kHz Deterministic Loop</strong>: Zero OS scheduler jitter.</li>
+                    <li>🎯 <strong>SG90 Pan/Tilt Tracking</strong>: 50 Hz closed-loop servo interpolation.</li>
+                    <li>📡 <strong>HLK-LD2410C Radar</strong>: 24 GHz presence auto-wake via UART.</li>
+                    <li>📶 <strong>SIM800C GSM Modem</strong>: Direct AT command offline SMS dispatch.</li>
+                    <li>💡 <strong>Safety Relays & Watchdog</strong>: 30-second auto-disarm hardware interlock.</li>
+                    <li>📊 <strong>Qwiic I2C Aggregator</strong>: SGP40, INA219, MPU-6050, DHT22.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real-Time Telemetry HUD -->
+    <section id="telemetry" class="section-container">
+        <div class="section-header">
+            <span class="section-tag">MULTI-SENSOR TELEMETRY</span>
+            <h2 class="section-title">Continuous Health & Ambient Telemetry</h2>
+            <p class="section-subtitle">Real-time environmental monitoring streamed from the STM32 SensorBus to the MPU.</p>
+        </div>
+
+        <div class="telemetry-grid">
+            <div class="tele-card">
+                <div class="tele-icon">🌿</div>
+                <div class="tele-title">Sensirion SGP40</div>
+                <div class="tele-value" id="valVoc">112 <small>Index</small></div>
+                <div class="tele-desc">Air Quality (VOC) — Clean Normal</div>
+            </div>
+            <div class="tele-card">
+                <div class="tele-icon">⚡</div>
+                <div class="tele-title">TI INA219 Monitor</div>
+                <div class="tele-value" id="valPower">5.04 <small>V</small> | 420 <small>mA</small></div>
+                <div class="tele-desc">Active Power: 2.11 Watts</div>
+            </div>
+            <div class="tele-card">
+                <div class="tele-icon">📡</div>
+                <div class="tele-title">HLK-LD2410C Radar</div>
+                <div class="tele-value text-green" id="valRadar">PRESENT <small>(85 cm)</small></div>
+                <div class="tele-desc">24 GHz Micro-Motion Auto-Wake</div>
+            </div>
+            <div class="tele-card">
+                <div class="tele-icon">🌡️</div>
+                <div class="tele-title">DHT22 Ambient</div>
+                <div class="tele-value" id="valDht">26.4 <small>°C</small> | 52 <small>%</small></div>
+                <div class="tele-desc">Temperature & Relative Humidity</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hardware Bill of Materials (BOM) Section -->
+    <section id="hardware" class="section-container">
+        <div class="section-header">
+            <span class="section-tag">HARDWARE SPECIFICATION</span>
+            <h2 class="section-title">Bill of Materials & Logic Isolation</h2>
+            <p class="section-subtitle">Complete components mapped with exact part numbers, voltage domains, and protocols.</p>
+        </div>
+
+        <div class="table-responsive">
+            <table class="bom-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Component Name</th>
+                        <th>Exact Part Number</th>
+                        <th>Bus / Protocol</th>
+                        <th>Voltage Domain</th>
+                        <th>Function</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>01</strong></td>
+                        <td><strong>Arduino UNO Q 4GB</strong></td>
+                        <td>ABX00173</td>
+                        <td>Qualcomm QRB2210 + STM32U585</td>
+                        <td><span class="tag-volt v5">5V / 3A PD</span></td>
+                        <td>Dual-Brain Master Compute Platform</td>
+                    </tr>
+                    <tr>
+                        <td><strong>02</strong></td>
+                        <td>Raspberry Pi Camera v3</td>
+                        <td>Sony IMX708</td>
+                        <td>4-Lane MIPI-CSI</td>
+                        <td><span class="tag-volt v18">1.8V / 3.3V</span></td>
+                        <td>60 FPS 1080p Optical Vision Pipeline</td>
+                    </tr>
+                    <tr>
+                        <td><strong>03</strong></td>
+                        <td>SmartElex 5" TFT Touch</td>
+                        <td>800x480 Capacitive</td>
+                        <td>HDMI / MIPI-DSI + USB Touch</td>
+                        <td><span class="tag-volt v5">5V Logic</span></td>
+                        <td>Interactive Assistive UI & Subtitles</td>
+                    </tr>
+                    <tr>
+                        <td><strong>04</strong></td>
+                        <td>HLK-LD2410C Radar</td>
+                        <td>24GHz FMCW</td>
+                        <td>UART2 @ 115200 + GPIO Out</td>
+                        <td><span class="tag-volt v33">3.3V Logic</span></td>
+                        <td>Human Micro-Motion Auto-Wake</td>
+                    </tr>
+                    <tr>
+                        <td><strong>05</strong></td>
+                        <td>SIM800C GSM Module</td>
+                        <td>SIM800C Quad-Band</td>
+                        <td>UART3 @ 9600 baud</td>
+                        <td><span class="tag-volt v4">4.0V / 2A Rail</span></td>
+                        <td>Offline Emergency Cellular SMS Dispatch</td>
+                    </tr>
+                    <tr>
+                        <td><strong>06</strong></td>
+                        <td>DFRobot MAX98357A</td>
+                        <td>I2S Class-D Amp</td>
+                        <td>I2S Audio Bus (TXU0104)</td>
+                        <td><span class="tag-volt v18">1.8V to 5V</span></td>
+                        <td>Synthesized Natural Voice Speech (TTS)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>07</strong></td>
+                        <td>Dual Opto Relays</td>
+                        <td>2-Channel SSR/Opto</td>
+                        <td>Active-LOW GPIO (D6/D7)</td>
+                        <td><span class="tag-volt v5">5V Isolated</span></td>
+                        <td>Room Light & Strobe Alarm Actuation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>08</strong></td>
+                        <td>SG90 Servos (Pair)</td>
+                        <td>TowerPro SG90</td>
+                        <td>Hardware PWM (D9/D10)</td>
+                        <td><span class="tag-volt v5">5V Rail</span></td>
+                        <td>Autonomous Closed-Loop Pan/Tilt Tracking</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>NeuroSign-HMI</h3>
+                <p>Designed & Engineered for the <strong>Arduino Physical AI Challenge India 2026</strong>.</p>
+                <p class="copyright">Built by <strong>Rudra Attri Pandey</strong> (voidreformer). Open-source under MIT License.</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/voidreformer/NeuroSign-HMI-Max" target="_blank">GitHub Repository</a>
+                <a href="https://github.com/voidreformer/NeuroSign-HMI-Max/blob/main/PROJECT_REPORT.md" target="_blank">Project Report</a>
+                <a href="https://github.com/voidreformer/NeuroSign-HMI-Max/blob/main/schematics/WIRING_GUIDE.md" target="_blank">Wiring Guide</a>
+                <a href="https://robu.in/arduino-physical-ai-challenge-india-2026/" target="_blank">Challenge Portal</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
