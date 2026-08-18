@@ -71,7 +71,7 @@ The Arduino UNO Q bridges high-throughput neural vision processing with determin
 | **07** | Smart Display & Touch | SmartElex 5" TFT 800×480 | USB-Touch / HDMI-DSI | 5V Power / USB |
 | **08** | Pan/Tilt Tracking Servos | 2× TowerPro SG90 Micro Servos | Hardware PWM (D9, D10) | 5V Isolated Rail |
 | **09** | Dual Opto Relays | 2-Channel Relay Module | Digital Active-LOW (D6, D7)| 5V Coil (Opto) |
-| **10** | Air Quality Sensor | Sensirion SGP40 (VOC Index) | I2C1 (0x59) via Qwiic | 3.3V |
+| **10** | Air Quality Sensor | Adafruit SGP40 Air Quality Sensor (STEMMA QT / Qwiic) | I2C1 (0x59) via Qwiic | 3.3V |
 | **11** | Precision Power Monitor | TI INA219 High-Side Monitor | I2C1 (0x40) via Qwiic | 3.3V |
 | **12** | 6-Axis Motion / IMU | MPU-6050 (Gyro + Accel) | I2C1 (0x68) via Qwiic | 3.3V |
 | **13** | Temp & Humidity Sensor | DHT22 (AM2302) | Single-Bus (D4 / PB6) | 3.3V / 5V |

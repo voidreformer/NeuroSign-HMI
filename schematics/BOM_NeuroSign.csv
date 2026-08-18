@@ -10,7 +10,7 @@ Item_Index,Component_Name,Exact_Part_Number,Manufacturer_Supplier,Quantity,Unit_
 09,Pan-Tilt Servo Actuators,TowerPro SG90 Micro Servo 9g,TowerPro / Robu.in,2,240,PWM (D9/D10),Dynamic camera framing & tracking
 10,Optical Isolated Relays,2-Channel 5V Relay Module,Songle / Robu.in,1,120,Digital GPIO (D6/D7),Smart home lights and emergency siren
 11,Digital Power Monitor,INA219 High-Side I2C Sensor,Texas Instruments,1,175,Qwiic I2C,Real-time current voltage and power tracking
-12,Air Quality VOC Sensor,GY-SGP40 Gas Sensor,Sensirion / Robu.in,1,799,Qwiic I2C,Environmental VOC and room air quality
+12,Air Quality VOC Sensor,Adafruit SGP40 Air Quality Sensor (STEMMA QT / Qwiic),Adafruit / Robu.in,1,1199,Qwiic I2C,Environmental VOC index and indoor air quality
 13,6-Axis Motion Sensor,MPU-6050 Accelerometer/Gyro,InvenSense / Robu.in,1,149,Qwiic I2C,Vibration and tilt stability detection
 14,Temperature & Humidity,DHT22 / AM2302 Digital Sensor,Aosong / Robu.in,1,299,Single-Bus (D4),Ambient climate telemetry
 15,Logic Level Shifter,TXU0104 4-Bit Directional Shifter,Texas Instruments,2,190,Logic Shifter,1.8V to 3.3V bidirectional audio/data translation
