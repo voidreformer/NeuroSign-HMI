@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuro Sign - Paralysis Patient Assistance HUD</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="cyber-scanline"></div>
+    <div class="glow-bg"></div>
+
+    <div class="app-container">
+        <!-- TOP HEADER -->
+        <header class="main-header">
+            <div class="brand-box">
+                <div class="logo-icon">
+                    <div class="pulse-ring"></div>
+                    <span class="symbol">Ψ</span>
+                </div>
+                <div>
+                    <h1 class="brand-title">NEURO SIGN</h1>
+                    <p class="brand-sub">Paralysis Patient Assistance & Biomedical Telemetry System</p>
+                </div>
+            </div>
+
+            <div class="system-meta">
+                <div class="author-badge">
+                    <span class="label">LEAD DEVELOPER:</span>
+                    <span class="value">Rudra Attri Pandey</span>
+                </div>
+                <div class="connection-badge" id="wsStatusBadge">
+                    <div class="indicator-dot" id="wsDot"></div>
+                    <span id="wsText">DISCONNECTED</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- EMERGENCY BANNER (Hidden unless triggered) -->
+        <div class="emergency-banner" id="emergencyBanner">
+            <div class="alarm-icon">⚠️</div>
+            <div class="alarm-content">
+                <h2 id="emergencyTitle">PATIENT EMERGENCY ALERT TRIGGERED!</h2>
+                <p id="emergencySubtitle">Immediate caregiver assistance required at Bedside 1</p>
+            </div>
+            <button class="btn-ack" id="btnDismissAlarm" onclick="dismissAlarm()">ACKNOWLEDGE / SILENCE</button>
+        </div>
+
+        <!-- MAIN DASHBOARD GRID -->
+        <main class="dashboard-grid">
+            
+            <!-- CARD 1: TX GLOVE & RF LINK STATUS -->
+            <section class="card glass-card" id="cardGlove">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">📡</span>
+                        <h2>TX GLOVE & RF LINK</h2>
+                    </div>
+                    <div class="rf-signal-meter" title="RF 433MHz Signal Quality">
+                        <span class="signal-bar" id="bar1"></span>
+                        <span class="signal-bar" id="bar2"></span>
+                        <span class="signal-bar" id="bar3"></span>
+                        <span class="signal-bar" id="bar4"></span>
+                        <span class="signal-pct" id="rfQualityText">0%</span>
+                    </div>
+                </div>
+
+                <div class="glove-telemetry-row">
+                    <div class="metric-pill">
+                        <span class="m-label">Link Status</span>
+                        <span class="m-val online" id="rfLinkStatus">SEARCHING</span>
+                    </div>
+                    <div class="metric-pill">
+                        <span class="m-label">Battery</span>
+                        <span class="m-val highlight" id="gloveBattery">-- %</span>
+                    </div>
+                    <div class="metric-pill">
+                        <span class="m-label">Packets RX</span>
+                        <span class="m-val" id="pktCount">0</span>
+                    </div>
+                    <div class="metric-pill">
+                        <span class="m-label">Packet Loss</span>
+                        <span class="m-val alert" id="pktLoss">0%</span>
+                    </div>
+                </div>
+
+                <!-- 3x Flex Sensors -->
+                <div class="flex-sensors-container">
+                    <h3>FLEX SENSOR TELEMETRY</h3>
+                    
+                    <div class="flex-meter">
+                        <div class="meter-info">
+                            <span>Thumb (F1)</span>
+                            <span class="val" id="f1Val">0%</span>
+                        </div>
+                        <div class="meter-track">
+                            <div class="meter-fill" id="f1Fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex-meter">
+                        <div class="meter-info">
+                            <span>Index Finger (F2)</span>
+                            <span class="val" id="f2Val">0%</span>
+                        </div>
+                        <div class="meter-track">
+                            <div class="meter-fill" id="f2Fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex-meter">
+                        <div class="meter-info">
+                            <span>Middle Finger (F3)</span>
+                            <span class="val" id="f3Val">0%</span>
+                        </div>
+                        <div class="meter-track">
+                            <div class="meter-fill" id="f3Fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hand Tilt & Tremor -->
+                <div class="orientation-box">
+                    <div class="tilt-gauge">
+                        <span class="m-label">Pitch Angle</span>
+                        <span class="tilt-value" id="pitchVal">0°</span>
+                    </div>
+                    <div class="tilt-gauge">
+                        <span class="m-label">Roll Angle</span>
+                        <span class="tilt-value" id="rollVal">0°</span>
+                    </div>
+                    <div class="tilt-gauge">
+                        <span class="m-label">Tremor Intensity</span>
+                        <span class="tilt-value tremor" id="tremorVal">0%</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CARD 2: NEURO AI GESTURE RECOGNITION -->
+            <section class="card glass-card ai-hero-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🧠</span>
+                        <h2>NEURO AI CLASSIFIER</h2>
+                    </div>
+                    <span class="badge-ai">TinyML v2.4</span>
+                </div>
+
+                <div class="active-gesture-display">
+                    <span class="gesture-sub">DETECTED PATIENT INTENT</span>
+                    <h2 class="gesture-name" id="aiGestureName">NEUTRAL / RESTING</h2>
+                    <div class="ai-confidence-bar">
+                        <div class="conf-fill" id="aiConfFill" style="width: 95%;"></div>
+                    </div>
+                    <span class="conf-text" id="aiConfText">Confidence: 95%</span>
+                </div>
+
+                <div class="gesture-quick-legend">
+                    <div class="legend-item" id="leg1">💧 <span>Water (Flat+F1)</span></div>
+                    <div class="legend-item" id="leg2">🍲 <span>Food (Flat+F2)</span></div>
+                    <div class="legend-item" id="leg3">💊 <span>Medicine (Flat+F3)</span></div>
+                    <div class="legend-item" id="leg4">🚨 <span>Help (Flat+All)</span></div>
+                    <div class="legend-item" id="leg11">💡 <span>Light (Left+F1)</span></div>
+                    <div class="legend-item" id="leg12">🌀 <span>Fan (Left+F2)</span></div>
+                    <div class="legend-item" id="leg13">🛏️ <span>Bed (Left+F3)</span></div>
+                    <div class="legend-item" id="leg21">👩‍⚕️ <span>Nurse (Right+F1)</span></div>
+                    <div class="legend-item" id="leg22">⚠️ <span>Pain (Right+F2)</span></div>
+                    <div class="legend-item" id="leg23">🌙 <span>All Off (Right+F3)</span></div>
+                </div>
+
+                <div class="ai-live-canvas-wrap">
+                    <canvas id="tremorWaveCanvas" width="400" height="75"></canvas>
+                </div>
+            </section>
+
+            <!-- CARD 3: ROOM ENVIRONMENT (DHT11, BMP280, SGP40) -->
+            <section class="card glass-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🌿</span>
+                        <h2>PATIENT ROOM VITALS</h2>
+                    </div>
+                    <span class="badge-sensor">DHT11 • BMP280 • SGP40</span>
+                </div>
+
+                <div class="env-grid">
+                    <div class="env-widget">
+                        <span class="env-icon">🌡️</span>
+                        <div class="env-details">
+                            <span class="env-label">Temperature</span>
+                            <span class="env-val" id="envTemp">25.4 °C</span>
+                        </div>
+                    </div>
+
+                    <div class="env-widget">
+                        <span class="env-icon">💧</span>
+                        <div class="env-details">
+                            <span class="env-label">Humidity</span>
+                            <span class="env-val" id="envHum">54.0 %</span>
+                        </div>
+                    </div>
+
+                    <div class="env-widget">
+                        <span class="env-icon">⏱️</span>
+                        <div class="env-details">
+                            <span class="env-label">Pressure</span>
+                            <span class="env-val" id="envPress">1013.2 hPa</span>
+                        </div>
+                    </div>
+
+                    <div class="env-widget">
+                        <span class="env-icon">🍃</span>
+                        <div class="env-details">
+                            <span class="env-label">Air Quality (VOC)</span>
+                            <span class="env-val good" id="envVoc">95 (Clean)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="altitude-bar">
+                    <span>Est. Altitude: <strong id="envAlt">42.5 m</strong></span>
+                    <span>Air Status: <strong class="text-good" id="envAirStatus">OPTIMAL</strong></span>
+                </div>
+            </section>
+
+            <!-- CARD 4: HOME AUTOMATION & RELAY CONTROL -->
+            <section class="card glass-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">⚡</span>
+                        <h2>HOME AUTOMATION (4-CH RELAYS)</h2>
+                    </div>
+                    <span class="badge-relay">Opto-Isolated</span>
+                </div>
+
+                <div class="relays-grid">
+                    <div class="relay-box" id="relayCard0">
+                        <div class="relay-title">
+                            <span class="r-icon">💡</span>
+                            <span>Light 1</span>
+                        </div>
+                        <button class="toggle-btn" id="btnRelay0" onclick="toggleRelay(0)">OFF</button>
+                    </div>
+
+                    <div class="relay-box" id="relayCard1">
+                        <div class="relay-title">
+                            <span class="r-icon">🌀</span>
+                            <span>Room Fan</span>
+                        </div>
+                        <button class="toggle-btn" id="btnRelay1" onclick="toggleRelay(1)">OFF</button>
+                    </div>
+
+                    <div class="relay-box" id="relayCard2">
+                        <div class="relay-title">
+                            <span class="r-icon">🛏️</span>
+                            <span>Bed Position</span>
+                        </div>
+                        <button class="toggle-btn" id="btnRelay2" onclick="toggleRelay(2)">OFF</button>
+                    </div>
+
+                    <div class="relay-box emergency-relay" id="relayCard3">
+                        <div class="relay-title">
+                            <span class="r-icon">🚨</span>
+                            <span>Alarm Buzzer</span>
+                        </div>
+                        <button class="toggle-btn btn-danger" id="btnRelay3" onclick="toggleRelay(3)">OFF</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CARD 5: ELECTRICAL POWER MONITOR (INA219) -->
+            <section class="card glass-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🔋</span>
+                        <h2>HUB ELECTRICAL MONITOR (INA219)</h2>
+                    </div>
+                    <span class="badge-power">High-Side I2C</span>
+                </div>
+
+                <div class="power-stats">
+                    <div class="power-metric">
+                        <span class="p-title">Supply Bus Voltage</span>
+                        <span class="p-number" id="pwrVolt">5.04 V</span>
+                    </div>
+                    <div class="power-metric">
+                        <span class="p-title">Current Consumption</span>
+                        <span class="p-number highlight" id="pwrCurr">148.2 mA</span>
+                    </div>
+                    <div class="power-metric">
+                        <span class="p-title">Total Power Draw</span>
+                        <span class="p-number" id="pwrWatts">746.9 mW</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CARD 6: VOICE ALERT / TTS ANNOUNCER CONSOLE -->
+            <section class="card glass-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">📢</span>
+                        <h2>MAX98357A I2S VOICE ANNOUNCER</h2>
+                    </div>
+                    <span class="badge-audio">3W Mono DAC</span>
+                </div>
+
+                <div class="audio-btn-grid">
+                    <button class="btn-voice" onclick="playVoicePrompt(3)">💧 "Need Water"</button>
+                    <button class="btn-voice" onclick="playVoicePrompt(4)">🍲 "Need Food"</button>
+                    <button class="btn-voice" onclick="playVoicePrompt(9)">👩‍⚕️ "Call Nurse"</button>
+                    <button class="btn-voice btn-emergency-prompt" onclick="playVoicePrompt(5)">🚨 "Emergency Help"</button>
+                    <button class="btn-voice" onclick="playVoicePrompt(6)">💡 "Light Toggle Tone"</button>
+                    <button class="btn-voice" onclick="playVoicePrompt(7)">🌀 "Fan Toggle Tone"</button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- PATIENT CALL & EVENT HISTORY LOG -->
+        <section class="card glass-card history-card">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="icon">📋</span>
+                    <h2>PATIENT CALL & EVENT AUDIT LOG</h2>
+                </div>
+                <button class="btn-clear" onclick="clearEventLog()">Clear Log</button>
+            </div>
+            <div class="log-table-wrap">
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>TIME</th>
+                            <th>EVENT / GESTURE</th>
+                            <th>CONFIDENCE</th>
+                            <th>STATUS</th>
+                            <th>ACTION TAKEN</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                        <tr>
+                            <td>12:00:00</td>
+                            <td>System Initialized</td>
+                            <td>100%</td>
+                            <td><span class="log-tag tag-ready">READY</span></td>
+                            <td>All Subsystems Nominal</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="app-footer">
+            <p><strong>Neuro Sign</strong> • Industrial Assistive Biomedical Platform • Designed & Developed by <strong>Rudra Attri Pandey</strong> • ESP32-S3 Base Hub (192.168.4.1)</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
