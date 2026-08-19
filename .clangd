@@ -1,10 +1,13 @@
 CompileFlags:
   Add:
+    - -x
+    - c++
     - -DARDUINO=10819
     - -DARDUINO_ARCH_ZEPHYR
     - -std=c++17
-    - -Wno-unknown-warning-option
+    - -Wno-everything
 Diagnostics:
   Suppress:
+    - fe_expected_compiler_job
     - drv_unknown_argument
-    - expected_compiler_job
+    - "*"
