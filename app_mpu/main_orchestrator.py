@@ -21,6 +21,7 @@ from vision_pipeline import VisionPipeline
 from display_touch_ui import DisplayTouchUI
 from landmark_extractor import LandmarkExtractor       # Nemotron Phase 3
 from gesture_classifier import GestureClassifier       # Nemotron Phase 3
+from wearable_bridge import WearableGloveBridge         # Wearable Glove & Hub
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 logger = logging.getLogger("Main_Orchestrator")
@@ -78,6 +79,16 @@ class NeuroSignOrchestrator:
         except Exception as e:
             logger.warning(f"GestureClassifier not active ({e}). AI inference bypassed until model is available.")
 
+        # 6. Initialize Wearable Glove & Medical Hub Bridge
+        self.wearable_bridge = WearableGloveBridge(
+            port="/dev/ttyUSB0",
+            baudrate=115200,
+            gesture_callback=self._on_wearable_gesture,
+            spasm_callback=self._on_spasm_alert,
+            sensor_callback=self._on_wearable_sensor
+        )
+        self.wearable_bridge.start()
+
         # State tracking
         self.running = False
         self.light_state = False
@@ -89,6 +100,23 @@ class NeuroSignOrchestrator:
         # Register MCU Telemetry Callbacks
         self.ipc.register_callback("radar_presence", self._on_radar_update)
         self.ipc.register_callback("sensor_telemetry", self._on_sensor_update)
+
+    def _on_wearable_gesture(self, gesture_label: str, confidence: float):
+        """Dispatched when patient triggers gesture via wearable flex glove."""
+        logger.info(f"[WEARABLE GLOVE] Ingested gesture: '{gesture_label}' (Conf: {confidence:.2f})")
+        self.handle_classified_gesture(gesture_label, confidence, hand_center=None)
+
+    def _on_spasm_alert(self, payload: dict):
+        """Dispatched when involuntary muscle spasms / tremors are detected by ADXL345."""
+        logger.warning(f"[SPASM DETECTED] Tremor anomaly triggered: {payload}")
+        if hasattr(self.ui, 'lang_engine'):
+            en_lbl, ind_lbl, ind_phrase = self.ui.lang_engine.get_bilingual_pair("Emergency - Need Help")
+            self.ui.update_subtitle("SPASM DETECTED", "झटका पहचाना गया", 1.0)
+        self.ipc.update_matrix_glyph(2)  # Warning alert glyph
+
+    def _on_wearable_sensor(self, payload: dict):
+        """Dispatched when SGP40, INA219, BMP280, and Flex sensor telemetry arrives from Wearable Hub."""
+        self.ui.update_sensors(payload)
 
     def _on_radar_update(self, payload: dict):
         """Dispatched when HLK-LD2410C radar detects human presence."""
@@ -246,6 +274,8 @@ class NeuroSignOrchestrator:
         """Gracefully tears down all hardware and worker threads."""
         logger.info("Shutting down NeuroSign-HMI...")
         self.running = False
+        if hasattr(self, 'wearable_bridge') and self.wearable_bridge:
+            self.wearable_bridge.stop()
         self.vision.stop()
         self.audio.shutdown()
         self.landmark_extractor.close()
