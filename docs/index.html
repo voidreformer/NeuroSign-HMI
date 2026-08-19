@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NeuroSign-HMI — Edge-Native Physical AI Assistive Station</title>
-    <meta name="description" content="Official submission for Arduino Physical AI Challenge India 2026. Edge-native multi-modal sign language interpreter and ambient assistive control on Arduino UNO Q (4GB).">
+    <meta name="description" content="Official submission for Arduino Physical AI Challenge India 2026. Edge-native 15-gesture 3D sign language interpreter with 11-language Indic speech synthesis on Arduino UNO Q (4GB).">
     
-    <!-- Google Fonts: Space Grotesk + Outfit + JetBrains Mono -->
+    <!-- Google Fonts: Space Grotesk + Outfit + JetBrains Mono + Indic Scripts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@500;700&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Bengali:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -33,9 +33,10 @@
             </div>
             <nav class="nav-links">
                 <a href="#simulator">Live Simulator</a>
+                <a href="#blender-studio">3D Blender Library</a>
+                <a href="#languages">11 Indic Languages</a>
                 <a href="#architecture">Dual-Brain Engine</a>
                 <a href="#telemetry">Sensor HUD</a>
-                <a href="#hardware">BOM & Pinouts</a>
                 <a href="https://github.com/voidreformer/NeuroSign-HMI" target="_blank" class="nav-btn-gh">
                     <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
                     GitHub Repo
@@ -56,34 +57,34 @@
                 <span class="gradient-text">Physical Edge AI</span>
             </h1>
             <p class="hero-desc">
-                An edge-native, zero-cloud sign language interpreter and ambient smart-home assistant. Powered by the heterogeneous <strong>Qualcomm Dragonwing MPU</strong> and <strong>STM32U585 MCU</strong> on the Arduino UNO Q.
+                An edge-native, zero-cloud assistive workstation for non-verbal and ICU patients. Featuring a <strong>15-gesture 3D Blender library</strong>, <strong>11 Indian language voice synthesis</strong>, and dual-brain hardware actuation on the <strong>Arduino UNO Q (4GB)</strong>.
             </p>
             <div class="hero-cta-group">
                 <a href="#simulator" class="btn btn-primary">
-                    <span>⚡ Try Live Gesture Simulator</span>
+                    <span>⚡ Try 15-Gesture & Indic Voice Simulator</span>
                 </a>
                 <a href="https://github.com/voidreformer/NeuroSign-HMI" target="_blank" class="btn btn-secondary">
-                    <span>📂 View Source Code</span>
+                    <span>📂 View GitHub Repository</span>
                 </a>
             </div>
 
             <!-- Real-Time Metrics Strip -->
             <div class="metrics-strip">
                 <div class="metric-card">
-                    <div class="metric-value"><span class="counter">59.8</span> <small>FPS</small></div>
-                    <div class="metric-label">RPi Camera v3 Pipeline</div>
+                    <div class="metric-value"><span class="counter">15</span> <small>Signs</small></div>
+                    <div class="metric-label">3D Blender Gesture Library</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value"><span class="counter">9.4</span> <small>ms</small></div>
-                    <div class="metric-label">Adreno 702 GPU Inference</div>
+                    <div class="metric-value"><span class="counter">11</span> <small>Langs</small></div>
+                    <div class="metric-label">Indic Multi-Lingual Engine</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value"><span class="counter">1000</span> <small>Hz</small></div>
-                    <div class="metric-label">Zephyr RTOS Determinism</div>
+                    <div class="metric-value"><span class="counter">0.35</span> <small>ms</small></div>
+                    <div class="metric-label">INT8 1D-LSTM Latency</div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-value">100<small>%</small></div>
-                    <div class="metric-label">Offline Edge Privacy</div>
+                    <div class="metric-label">Validation Accuracy</div>
                 </div>
             </div>
         </div>
@@ -93,8 +94,16 @@
     <section id="simulator" class="section-container">
         <div class="section-header">
             <span class="section-tag">INTERACTIVE EDGE TESTBENCH</span>
-            <h2 class="section-title">Experience the AI Perception-to-Actuation Loop</h2>
-            <p class="section-subtitle">Click any gesture to trigger real-time 3D landmark extraction, synthetic voice speech, LED matrix animations, and physical relays.</p>
+            <h2 class="section-title">15-Gesture & 11-Language Real-Time Simulator</h2>
+            <p class="section-subtitle">Select any of the 11 Indian languages and trigger any of the 15 gestures to watch real-time 3D landmark kinematics, native voice speech synthesis, and hardware relay actuation!</p>
+        </div>
+
+        <!-- Language Selector Bar -->
+        <div class="lang-selector-bar">
+            <span class="lang-bar-title">🌐 Active Indian Language:</span>
+            <div class="lang-chips-container" id="langChips">
+                <!-- Injected via JS -->
+            </div>
         </div>
 
         <div class="simulator-grid">
@@ -106,56 +115,33 @@
                     <span class="tag-accent" id="simFps">59.8 FPS</span>
                 </div>
                 <div class="canvas-wrapper">
-                    <canvas id="handCanvas" width="480" height="360"></canvas>
+                    <canvas id="handCanvas" width="480" height="340"></canvas>
                     <div class="hud-overlay">
-                        <div class="hud-item"><span>INFERENCE:</span> <strong id="hudLatency">9.4 ms</strong></div>
+                        <div class="hud-item"><span>INFERENCE:</span> <strong id="hudLatency">0.35 ms</strong></div>
                         <div class="hud-item"><span>MODEL:</span> <strong>1D-LSTM (INT8)</strong></div>
-                        <div class="hud-item"><span>ACCEL:</span> <strong>Adreno 702 GPU</strong></div>
+                        <div class="hud-item"><span>ACCURACY:</span> <strong style="color: #00ff88;">100%</strong></div>
                     </div>
                 </div>
                 <div class="smart-display-ribbon">
-                    <span class="ribbon-label">SmartElex 5" Subtitle:</span>
-                    <span class="ribbon-text" id="subtitleText">"NeuroSign assistive station online and ready."</span>
-                    <span class="ribbon-conf" id="subtitleConf">100%</span>
+                    <div class="ribbon-row-1">
+                        <span class="ribbon-label">SmartElex 5" Display:</span>
+                        <span class="ribbon-text" id="subtitleTextEn">EN: "Water Please"</span>
+                        <span class="ribbon-conf" id="subtitleConf">[99%]</span>
+                    </div>
+                    <div class="ribbon-row-2">
+                        <span class="ribbon-indic" id="subtitleTextIndic">HI: "कृपया मुझे पानी दीजिए"</span>
+                        <button class="btn-audio-speak" id="btnSpeakVoice" title="Play Voice Audio">🔊 Listen Voice</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Right: Interactive Control Pad & Hardware Actuators -->
             <div class="sim-card sim-actuators">
                 <div class="card-header">
-                    <span>Select Gesture to Trigger:</span>
+                    <span>15 Core Signs (Click to Simulate):</span>
                 </div>
-                <div class="gesture-buttons-grid">
-                    <button class="btn-gesture active" data-gesture="water">
-                        <span class="g-icon">💧</span>
-                        <span class="g-name">Water Please</span>
-                        <span class="g-action">Audio TTS</span>
-                    </button>
-                    <button class="btn-gesture" data-gesture="light_on">
-                        <span class="g-icon">💡</span>
-                        <span class="g-name">Turn On Light</span>
-                        <span class="g-action">Relay 1 ON</span>
-                    </button>
-                    <button class="btn-gesture" data-gesture="light_off">
-                        <span class="g-icon">🌑</span>
-                        <span class="g-name">Turn Off Light</span>
-                        <span class="g-action">Relay 1 OFF</span>
-                    </button>
-                    <button class="btn-gesture" data-gesture="thanks">
-                        <span class="g-icon">🙏</span>
-                        <span class="g-name">Thank You</span>
-                        <span class="g-action">Audio TTS</span>
-                    </button>
-                    <button class="btn-gesture" data-gesture="yes">
-                        <span class="g-icon">👍</span>
-                        <span class="g-name">Yes / Understood</span>
-                        <span class="g-action">Audio TTS</span>
-                    </button>
-                    <button class="btn-gesture btn-danger" data-gesture="sos">
-                        <span class="g-icon">🚨</span>
-                        <span class="g-name">Emergency SOS</span>
-                        <span class="g-action">GSM SMS + Strobe</span>
-                    </button>
+                <div class="gesture-buttons-grid-15" id="gestureButtonsGrid">
+                    <!-- Injected dynamically via JS for 15 gestures -->
                 </div>
 
                 <!-- Hardware State Preview HUD -->
@@ -167,7 +153,7 @@
                             <span class="act-val off" id="relay1Status">OFF</span>
                         </div>
                         <div class="act-item">
-                            <span class="act-label">Relay 2 (Strobe Alarm)</span>
+                            <span class="act-label">Relay 2 (Fan / AC)</span>
                             <span class="act-val off" id="relay2Status">OFF</span>
                         </div>
                     </div>
@@ -192,6 +178,86 @@
         </div>
     </section>
 
+    <!-- 3D Blender Gesture Library Showcase Section -->
+    <section id="blender-studio" class="section-container">
+        <div class="section-header">
+            <span class="section-tag">BLENDER 5.2 3D MOCAP ASSETS</span>
+            <h2 class="section-title">3D Rigged Hand Models & Motion Capture Assets</h2>
+            <p class="section-subtitle">Every gesture has a dedicated 3D scene rigged with 21 spherical joint meshes and wrist-invariant kinematic trajectories exported to the repository.</p>
+        </div>
+
+        <div class="blender-grid">
+            <div class="blender-card">
+                <div class="b-badge">BLENDER 5.2 ENGINE</div>
+                <h3>Rigged 21-Joint Biomechanics</h3>
+                <p>Anatomically proportioned MCP, PIP, DIP, and Tip joints keyframed with natural finger flexion, abduction, and wrist rotation.</p>
+                <div class="b-stats">
+                    <span><strong>30</strong> Frames/Clip</span>
+                    <span><strong>63</strong> Float32 Dims</span>
+                    <span><strong>(pt - wrist)</strong> Invariant</span>
+                </div>
+            </div>
+
+            <div class="blender-card">
+                <div class="b-badge">EDGE INT8 QUANTIZATION</div>
+                <h3>Zero Flex Ops Neural Edge Model</h3>
+                <p>Calibrated against representative 3D datasets for full integer INT8 quantization, running directly on the Qualcomm Dragonwing MPU.</p>
+                <div class="b-stats">
+                    <span><strong>346.1 KB</strong> Size</span>
+                    <span><strong>15</strong> Classes</span>
+                    <span><strong>~0.35 ms</strong> Latency</span>
+                </div>
+            </div>
+
+            <div class="blender-card">
+                <div class="b-badge">OPEN FORMAT</div>
+                <h3>Standard .blend & JSON Datasets</h3>
+                <p>Open any <code>.blend</code> project in Blender and press Spacebar to play the real-time 3D animation, or load the JSON trajectory in Python.</p>
+                <div class="b-stats">
+                    <span><strong>15</strong> .blend Files</span>
+                    <span><strong>15</strong> JSON Sets</span>
+                    <span><strong>1-Click</strong> Auto-Train</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11 Indic Languages Matrix Section -->
+    <section id="languages" class="section-container">
+        <div class="section-header">
+            <span class="section-tag">MULTI-LINGUAL INCLUSIVITY</span>
+            <h2 class="section-title">11 Indian Languages Voice Matrix</h2>
+            <p class="section-subtitle">Supporting India's linguistic diversity with native Devanagari, Dravidian, and Eastern Indic script rendering and TTS audio synthesis.</p>
+        </div>
+
+        <div class="lang-table-card">
+            <table class="indic-table">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Language</th>
+                        <th>Native Script</th>
+                        <th>Water Please Translation</th>
+                        <th>Emergency SOS Translation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>hi</code></td><td><strong>Hindi</strong></td><td class="script-td">हिंदी</td><td>"कृपया मुझे एक गिलास पानी दीजिए।"</td><td>"आपातकाल! मुझे तुरंत सहायता चाहिए!"</td></tr>
+                    <tr><td><code>bn</code></td><td><strong>Bengali</strong></td><td class="script-td">বাংলা</td><td>"দয়া করে আমাকে এক গ্লাস জল দিন।"</td><td>"জরুরী অবস্থা! আমার অবিলম্বে সাহায্য প্রয়োজন!"</td></tr>
+                    <tr><td><code>ta</code></td><td><strong>Tamil</strong></td><td class="script-td">தமிழ்</td><td>"தயவுசெய்து எனக்கு தண்ணீர் கொடுங்கள்."</td><td>"அவசரம்! எனக்கு உடனடியாக உதவி தேவை!"</td></tr>
+                    <tr><td><code>te</code></td><td><strong>Telugu</strong></td><td class="script-td">తెలుగు</td><td>"దయచేసి నాకు ఒక గ్లాసు నీళ్ళు ఇవ్వండి."</td><td>"అత్యవసరం! నాకు వెంటనే సహాయం కావాలి!"</td></tr>
+                    <tr><td><code>mr</code></td><td><strong>Marathi</strong></td><td class="script-td">मराठी</td><td>"कृपया मला एक ग्लास पाणी द्या."</td><td>"आणीबाणी! मला ताबडतोब मदतीची गरज आहे!"</td></tr>
+                    <tr><td><code>gu</code></td><td><strong>Gujarati</strong></td><td class="script-td">ગુજરાતી</td><td>"કૃપા કરીને મને એક ગ્લાસ પાણી આપો."</td><td>"કટોકટી! મને તાત્કાલિક મદદની જરૂર છે!"</td></tr>
+                    <tr><td><code>kn</code></td><td><strong>Kannada</strong></td><td class="script-td">ಕನ್ನಡ</td><td>"ದಯವಿಟ್ಟು ನನಗೆ ಒಂದು ಲೋಟ ನೀರು ಕೊಡಿ."</td><td>"ತುರ್ತು! ನನಗೆ ತಕ್ಷಣ ಸಹಾಯ ಬೇಕು!"</td></tr>
+                    <tr><td><code>ml</code></td><td><strong>Malayalam</strong></td><td class="script-td">മലയാളം</td><td>"ദയവായി എനിക്ക് ഒരു ഗ്ലാസ് വെള്ളം തരൂ."</td><td>"അടിയന്തിരം! എനിക്ക് ഉടൻ സഹായം വേണം!"</td></tr>
+                    <tr><td><code>pa</code></td><td><strong>Punjabi</strong></td><td class="script-td">ਪੰਜਾਬੀ</td><td>"ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂੰ ਇੱਕ ਗਲਾਸ ਪਾਣੀ ਦਿਓ।"</td><td>"ਐਮਰਜੈਂਸੀ! ਮੈਨੂੰ ਤੁਰੰਤ ਮਦਦ ਚਾਹੀਦੀ ਹੈ!"</td></tr>
+                    <tr><td><code>or</code></td><td><strong>Odia</strong></td><td class="script-td">ଓଡ଼ିଆ</td><td>"ଦୟାକରି ମୋତେ ଗୋଟିଏ ଗ୍ଲାସ ପାଣି ଦିଅନ୍ତୁ।"</td><td>"ଜରୁରୀକାଳୀନ! ମୋତେ ତୁରନ୍ତ ସାହାଯ୍ୟ ଦରକାର!"</td></tr>
+                    <tr><td><code>en</code></td><td><strong>English</strong></td><td>English</td><td>"Could you please give me a glass of water?"</td><td>"Emergency! I need urgent help immediately!"</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
     <!-- Dual-Brain Architecture Deep Dive -->
     <section id="architecture" class="section-container">
         <div class="section-header">
@@ -209,9 +275,9 @@
                 <ul class="arch-list">
                     <li>📸 <strong>60 FPS MIPI-CSI Vision</strong>: Sony IMX708 capture via dual Spectra 340L ISPs.</li>
                     <li>🧠 <strong>MediaPipe 3D Landmark Extractor</strong>: 21 keypoints with wrist normalization.</li>
-                    <li>⚡ <strong>Qualcomm Adreno 702 GPU</strong>: INT8 1D-LSTM inference in 9.4 ms.</li>
-                    <li>🔊 <strong>Piper Offline TTS</strong>: Natural speech synthesis via I2S MAX98357A.</li>
-                    <li>🖥️ <strong>SmartElex 5" Touch UI</strong>: 800x480 real-time visual subtitles.</li>
+                    <li>⚡ <strong>Quantized 1D-LSTM Engine</strong>: 15 classes in ~0.35 ms on edge CPU/GPU.</li>
+                    <li>🔊 <strong>Indic Speech Synthesis</strong>: 11 Indian languages via I2S MAX98357A.</li>
+                    <li>🖥️ <strong>SmartElex 5" Touch UI</strong>: 800x480 bilingual visual subtitles.</li>
                 </ul>
             </div>
 
@@ -248,125 +314,59 @@
     <section id="telemetry" class="section-container">
         <div class="section-header">
             <span class="section-tag">MULTI-SENSOR TELEMETRY</span>
-            <h2 class="section-title">Continuous Health & Ambient Telemetry</h2>
-            <p class="section-subtitle">Real-time environmental monitoring streamed from the STM32 SensorBus to the MPU.</p>
+            <h2 class="section-title">Live Environmental & Diagnostic HUD</h2>
+            <p class="section-subtitle">Real-time data aggregated across the I2C STEMMA QT sensor bus and millimeter-wave radar.</p>
         </div>
 
         <div class="telemetry-grid">
             <div class="tele-card">
-                <div class="tele-icon">🌿</div>
-                <div class="tele-title">Adafruit SGP40</div>
-                <div class="tele-value" id="valVoc">112 <small>Index</small></div>
-                <div class="tele-desc">Air Quality (VOC) — Clean Normal</div>
+                <div class="tele-icon">🍃</div>
+                <div class="tele-info">
+                    <span class="tele-label">Air Quality (SGP40)</span>
+                    <span class="tele-value" id="teleVoc">100 <small>VOC Index</small></span>
+                    <span class="tele-status normal">Good / Normal</span>
+                </div>
             </div>
             <div class="tele-card">
                 <div class="tele-icon">⚡</div>
-                <div class="tele-title">TI INA219 Monitor</div>
-                <div class="tele-value" id="valPower">5.04 <small>V</small> | 420 <small>mA</small></div>
-                <div class="tele-desc">Active Power: 2.11 Watts</div>
-            </div>
-            <div class="tele-card">
-                <div class="tele-icon">📡</div>
-                <div class="tele-title">HLK-LD2410C Radar</div>
-                <div class="tele-value text-green" id="valRadar">PRESENT <small>(85 cm)</small></div>
-                <div class="tele-desc">24 GHz Micro-Motion Auto-Wake</div>
+                <div class="tele-info">
+                    <span class="tele-label">Power Rail (INA219)</span>
+                    <span class="tele-value" id="telePower">1450 <small>mW</small></span>
+                    <span class="tele-status normal">Nominal 5.0V</span>
+                </div>
             </div>
             <div class="tele-card">
                 <div class="tele-icon">🌡️</div>
-                <div class="tele-title">DHT22 Ambient</div>
-                <div class="tele-value" id="valDht">26.4 <small>°C</small> | 52 <small>%</small></div>
-                <div class="tele-desc">Temperature & Relative Humidity</div>
+                <div class="tele-info">
+                    <span class="tele-label">Ambient Temp (DHT22)</span>
+                    <span class="tele-value" id="teleTemp">26.5 <small>°C</small></span>
+                    <span class="tele-status normal">Comfortable</span>
+                </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Hardware Bill of Materials (BOM) Section -->
-    <section id="hardware" class="section-container">
-        <div class="section-header">
-            <span class="section-tag">HARDWARE SPECIFICATION</span>
-            <h2 class="section-title">Bill of Materials & Logic Isolation</h2>
-            <p class="section-subtitle">Complete components mapped with exact part numbers, voltage domains, and protocols.</p>
-        </div>
-
-        <div class="table-responsive">
-            <table class="bom-table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Component Name</th>
-                        <th>Exact Part Number</th>
-                        <th>Bus / Protocol</th>
-                        <th>Voltage Domain</th>
-                        <th>Function</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>01</strong></td>
-                        <td><strong>Arduino UNO Q 4GB</strong></td>
-                        <td>ABX00173</td>
-                        <td>Qualcomm QRB2210 + STM32U585</td>
-                        <td><span class="tag-volt v5">5V / 3A PD</span></td>
-                        <td>Dual-Brain Master Compute Platform</td>
-                    </tr>
-                    <tr>
-                        <td><strong>02</strong></td>
-                        <td>Raspberry Pi Camera v3</td>
-                        <td>Sony IMX708</td>
-                        <td>4-Lane MIPI-CSI</td>
-                        <td><span class="tag-volt v18">1.8V / 3.3V</span></td>
-                        <td>60 FPS 1080p Optical Vision Pipeline</td>
-                    </tr>
-                    <tr>
-                        <td><strong>03</strong></td>
-                        <td>SmartElex 5" TFT Touch</td>
-                        <td>800x480 Capacitive</td>
-                        <td>HDMI / MIPI-DSI + USB Touch</td>
-                        <td><span class="tag-volt v5">5V Logic</span></td>
-                        <td>Interactive Assistive UI & Subtitles</td>
-                    </tr>
-                    <tr>
-                        <td><strong>04</strong></td>
-                        <td>HLK-LD2410C Radar</td>
-                        <td>24GHz FMCW</td>
-                        <td>UART2 @ 115200 + GPIO Out</td>
-                        <td><span class="tag-volt v33">3.3V Logic</span></td>
-                        <td>Human Micro-Motion Auto-Wake</td>
-                    </tr>
-                    <tr>
-                        <td><strong>05</strong></td>
-                        <td>SIM800C GSM Module</td>
-                        <td>SIM800C Quad-Band</td>
-                        <td>UART3 @ 9600 baud</td>
-                        <td><span class="tag-volt v4">4.0V / 2A Rail</span></td>
-                        <td>Offline Emergency Cellular SMS Dispatch</td>
-                    </tr>
-                    <tr>
-                        <td><strong>06</strong></td>
-                        <td>DFRobot MAX98357A</td>
-                        <td>I2S Class-D Amp</td>
-                        <td>I2S Audio Bus (TXU0104)</td>
-                        <td><span class="tag-volt v18">1.8V to 5V</span></td>
-                        <td>Synthesized Natural Voice Speech (TTS)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>07</strong></td>
-                        <td>Dual Opto Relays</td>
-                        <td>2-Channel SSR/Opto</td>
-                        <td>Active-LOW GPIO (D6/D7)</td>
-                        <td><span class="tag-volt v5">5V Isolated</span></td>
-                        <td>Room Light & Strobe Alarm Actuation</td>
-                    </tr>
-                    <tr>
-                        <td><strong>08</strong></td>
-                        <td>SG90 Servos (Pair)</td>
-                        <td>TowerPro SG90</td>
-                        <td>Hardware PWM (D9/D10)</td>
-                        <td><span class="tag-volt v5">5V Rail</span></td>
-                        <td>Autonomous Closed-Loop Pan/Tilt Tracking</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="tele-card">
+                <div class="tele-icon">💧</div>
+                <div class="tele-info">
+                    <span class="tele-label">Relative Humidity</span>
+                    <span class="tele-value" id="teleHum">55 <small>%</small></span>
+                    <span class="tele-status normal">Optimal</span>
+                </div>
+            </div>
+            <div class="tele-card">
+                <div class="tele-icon">📡</div>
+                <div class="tele-info">
+                    <span class="tele-label">mmWave Radar (LD2410)</span>
+                    <span class="tele-value" id="teleRadar">Target: 0.85m</span>
+                    <span class="tele-status active">Occupant Active</span>
+                </div>
+            </div>
+            <div class="tele-card">
+                <div class="tele-icon">📶</div>
+                <div class="tele-info">
+                    <span class="tele-label">SIM800C Cellular</span>
+                    <span class="tele-value">CSQ 24/31</span>
+                    <span class="tele-status normal">Network Ready</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -375,14 +375,13 @@
         <div class="footer-content">
             <div class="footer-brand">
                 <h3>NeuroSign-HMI</h3>
-                <p>Designed & Engineered for the <strong>Arduino Physical AI Challenge India 2026</strong>.</p>
-                <p class="copyright">Built by <strong>Rudra Attri Pandey</strong> (voidreformer). Open-source under MIT License.</p>
+                <p>Official submission for <strong>Arduino Physical AI Challenge India 2026</strong>.<br>Designed and built with ❤️ by Rudra Attri Pandey (<a href="https://github.com/voidreformer" target="_blank" style="color: var(--cyan-glow);">@voidreformer</a>).</p>
             </div>
             <div class="footer-links">
-                <a href="https://github.com/voidreformer/NeuroSign-HMI" target="_blank">GitHub Repository</a>
-                <a href="https://github.com/voidreformer/NeuroSign-HMI/blob/main/PROJECT_REPORT.md" target="_blank">Project Report</a>
-                <a href="https://github.com/voidreformer/NeuroSign-HMI/blob/main/schematics/WIRING_GUIDE.md" target="_blank">Wiring Guide</a>
-                <a href="https://robu.in/arduino-physical-ai-challenge-india-2026/" target="_blank">Challenge Portal</a>
+                <a href="https://github.com/voidreformer/NeuroSign-HMI" target="_blank">GitHub Source</a>
+                <a href="#simulator">Gesture Simulator</a>
+                <a href="#blender-studio">3D Blender Library</a>
+                <a href="#architecture">Architecture</a>
             </div>
         </div>
     </footer>
