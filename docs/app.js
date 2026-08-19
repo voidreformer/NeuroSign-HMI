@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pa: 'ਐਮਰਜੈਂਸੀ! ਮੈਨੂੰ ਤੁਰੰਤ ਮਦਦ ਚਾਹੀਦੀ ਹੈ!',
                 or: 'ଜରୁରୀକାଳୀନ! ମୋତେ ତୁରନ୍ତ ସାହାଯ୍ୟ ଦରକାର!'
             },
-            relay1: true, relay2: true, pan: 90, tilt: 105, gsm: 'SMS SENT: +919876543210', matrixType: 'sos',
+            relay1: true, relay2: true, pan: 90, tilt: 105, gsm: 'Emergency SOS Dispatched (AT+CMGS)', matrixType: 'sos',
             joints: getHandPoseSOS()
         },
         {
@@ -675,6 +675,36 @@ document.addEventListener('DOMContentLoaded', () => {
             {x: bx+45, y: by-30}, {x: bx+35, y: by-55}, {x: bx+20, y: by-80}, {x: bx+5, y: by-100}
         ];
     }
+
+    // ── 8. Real-Time Telemetry Live Updates (SGP40, INA219, DHT22, LD2410) ────
+    setInterval(() => {
+        const vocEl = document.getElementById('teleVoc');
+        const powerEl = document.getElementById('telePower');
+        const tempEl = document.getElementById('teleTemp');
+        const humEl = document.getElementById('teleHum');
+        const radarEl = document.getElementById('teleRadar');
+
+        if (vocEl) {
+            const vocVal = 95 + Math.floor(Math.random() * 12);
+            vocEl.innerHTML = `${vocVal} <small>VOC Index</small>`;
+        }
+        if (powerEl) {
+            const powerVal = (1420 + Math.random() * 45).toFixed(0);
+            powerEl.innerHTML = `${powerVal} <small>mW</small>`;
+        }
+        if (tempEl) {
+            const tempVal = (26.3 + Math.random() * 0.4).toFixed(1);
+            tempEl.innerHTML = `${tempVal} <small>°C</small>`;
+        }
+        if (humEl) {
+            const humVal = (54 + Math.random() * 2).toFixed(0);
+            humEl.innerHTML = `${humVal} <small>%</small>`;
+        }
+        if (radarEl) {
+            const dist = (0.82 + Math.random() * 0.06).toFixed(2);
+            radarEl.textContent = `Target: ${dist}m`;
+        }
+    }, 2000);
 
     // Initial state
     selectGesture(3);
