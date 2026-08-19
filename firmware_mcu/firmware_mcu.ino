@@ -165,5 +165,8 @@ void loop() {
     // 5. Enforce relay auto-shutoff timers
     relays.update();
 
+    // 6. Update 8x13 LED Matrix animations
+    matrix.update();
+
     delayMicroseconds(800);  // ~1 kHz tick (800 µs + overhead ≈ 1 ms)
 }

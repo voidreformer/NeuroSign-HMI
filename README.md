@@ -38,7 +38,7 @@ Designed for individuals with speech, hearing, or motor impairments, the system 
 
 ```
 NeuroSign_HMI/
-├── firmware_mcu/                 # STM32U585 (Zephyr RTOS / Arduino C++) [Sonnet 4.6]
+├── firmware_mcu/                 # STM32U585 (Zephyr RTOS / Arduino C++)
 │   ├── firmware_mcu.ino          # Core setup, 1 kHz loop & RPC listeners
 │   ├── RadarDriver.h             # HLK-LD2410C 24GHz UART auto-wake driver
 │   ├── ServoTracker.h            # SG90 PWM pan-tilt camera tracker
@@ -46,7 +46,7 @@ NeuroSign_HMI/
 │   ├── SensorBus.h               # SGP40 (VOC), INA219 (Power), DHT22, MPU6050
 │   ├── MatrixDisplay.h           # 8x13 Blue LED Matrix dynamic glyph renderer
 │   └── RelayActuator.h           # Opto-isolated relay & alarm controller
-├── app_mpu/                      # Qualcomm QRB2210 (Debian Linux Python 3.11) [Gemini 3.7]
+├── app_mpu/                      # Qualcomm QRB2210 (Debian Linux Python 3.11/3.12)
 │   ├── main_orchestrator.py      # Master async coordinator daemon
 │   ├── vision_pipeline.py        # 60 FPS RPi Camera v3 MIPI-CSI capture
 │   ├── landmark_extractor.py     # MediaPipe 3D Landmark extraction
@@ -54,11 +54,17 @@ NeuroSign_HMI/
 │   ├── audio_i2s.py              # I2S INMP441 capture & MAX98357A TTS playback
 │   ├── display_touch_ui.py       # SmartElex 5" 800x480 Capacitive Touch UI
 │   └── ipc_bridge.py             # MessagePack RPC bridge wrapper
-├── models/                       # Edge AI Models & Training Scripts [Nemotron 3 Ultra]
-│   ├── gesture_lstm_int8.tflite  # Quantized model artifact
+├── models/                       # Edge AI Models & 3D Mocap Augmentation Engine
+│   ├── gesture_lstm_int8.tflite  # Pre-trained quantized INT8 model artifact
 │   ├── labels.json               # Gesture vocabulary mapping
-│   ├── dataset_collector.py      # Real-time gesture data recorder
-│   └── train_lstm.py             # Model training & INT8 TFLite export
+│   ├── gestures_dataset.npz      # 2,100 sample 3D gesture training dataset
+│   ├── train_lstm.py             # Model training & INT8 TFLite export
+│   ├── synthetic_dataset_generator.py # Parametric 3D trajectory synthesizer
+│   ├── mocap_streamer.py         # Real-time webcam to Blender 3D streamer
+│   ├── blender_gesture_rig.py    # Blender 21-joint 3D hand armature & receiver
+│   └── dataset_collector.py      # Real-time manual gesture data recorder
+├── blender_addon/                # Blender MCP Integration
+│   └── addon.py                  # Blender MCP add-on for AI-assisted 3D modeling
 ├── docker/                       # Containerized App Lab Deployment
 │   ├── Dockerfile                # Production Debian image
 │   └── docker-compose.yml        # IPC socket & device mappings

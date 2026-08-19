@@ -1,33 +1,148 @@
 {
-  "version": "1.0",
-  "gesture_count": 7,
-  "confidence_threshold": 0.85,
-  "window_frames": 30,
-  "labels": {
-    "0": "Emergency - Need Help",
-    "1": "Turn On Room Light",
-    "2": "Turn Off Room Light",
-    "3": "Water Please",
-    "4": "Thank You",
-    "5": "Yes",
-    "6": "No"
+  "metadata": {
+    "description": "NeuroSign-HMI 3D Gesture & Bilingual Voice Dictionary",
+    "version": "2.1",
+    "total_gestures": 15,
+    "bilingual_support": [
+      "English",
+      "Hindi"
+    ]
   },
-  "gestures": [
-    "Emergency - Need Help",
-    "Turn On Room Light",
-    "Turn Off Room Light",
-    "Water Please",
-    "Thank You",
-    "Yes",
-    "No"
-  ],
-  "action_map": {
-    "Emergency - Need Help": "emergency_sos",
-    "Turn On Room Light": "relay_1_on",
-    "Turn Off Room Light": "relay_1_off",
-    "Water Please": "speak_water",
-    "Thank You": "speak_thanks",
-    "Yes": "speak_yes",
-    "No": "speak_no"
+  "gestures": {
+    "0": {
+      "name": "emergency",
+      "label": "Emergency - Need Help",
+      "label_hi": "आपातकालीन सहायता",
+      "spoken_phrase": "Emergency! I need urgent help immediately!",
+      "phrase_hi": "आपातकाल! मुझे तुरंत सहायता की आवश्यकता है!",
+      "action": "EMERGENCY_SMS_ALARM",
+      "led_glyph": "CHECKMARK"
+    },
+    "1": {
+      "name": "light_on",
+      "label": "Turn On Room Light",
+      "label_hi": "कमरे की लाइट चालू करें",
+      "spoken_phrase": "Please turn on the room light.",
+      "phrase_hi": "कृपया कमरे की लाइट चालू कर दीजिए।",
+      "action": "RELAY_CH1_ON",
+      "led_glyph": "CHECKMARK"
+    },
+    "2": {
+      "name": "light_off",
+      "label": "Turn Off Room Light",
+      "label_hi": "कमरे की लाइट बंद करें",
+      "spoken_phrase": "Please turn off the room light.",
+      "phrase_hi": "कृपया कमरे की लाइट बंद कर दीजिए।",
+      "action": "RELAY_CH1_OFF",
+      "led_glyph": "CHECKMARK"
+    },
+    "3": {
+      "name": "water",
+      "label": "Water Please",
+      "label_hi": "कृपया पानी दीजिए",
+      "spoken_phrase": "Could you please give me a glass of water?",
+      "phrase_hi": "कृपया मुझे एक गिलास पानी दीजिए।",
+      "action": "SPEECH_ASSIST",
+      "led_glyph": "CHECKMARK"
+    },
+    "4": {
+      "name": "thanks",
+      "label": "Thank You",
+      "label_hi": "धन्यवाद / शुक्रिया",
+      "spoken_phrase": "Thank you very much!",
+      "phrase_hi": "आपका बहुत-बहुत धन्यवाद!",
+      "action": "SPEECH_ASSIST",
+      "led_glyph": "CHECKMARK"
+    },
+    "5": {
+      "name": "yes",
+      "label": "Yes",
+      "label_hi": "हाँ / स्वीकार",
+      "spoken_phrase": "Yes, affirmative.",
+      "phrase_hi": "हाँ, बिल्कुल।",
+      "action": "SPEECH_ASSIST",
+      "led_glyph": "CHECKMARK"
+    },
+    "6": {
+      "name": "no",
+      "label": "No",
+      "label_hi": "नहीं / मना",
+      "spoken_phrase": "No, thank you.",
+      "phrase_hi": "नहीं, धन्यवाद।",
+      "action": "SPEECH_ASSIST",
+      "led_glyph": "CHECKMARK"
+    },
+    "7": {
+      "name": "food",
+      "label": "Food Please",
+      "label_hi": "खाना / भोजन दीजिए",
+      "spoken_phrase": "I am hungry, please bring me some food.",
+      "phrase_hi": "मुझे भूख लगी है, कृपया खाना लाइए।",
+      "action": "SPEECH_ASSIST",
+      "led_glyph": "CHECKMARK"
+    },
+    "8": {
+      "name": "medicine",
+      "label": "Medicine Doctor",
+      "label_hi": "दवाई / डॉक्टर सहायता",
+      "spoken_phrase": "I need my medicine or doctor assistance.",
+      "phrase_hi": "मुझे मेरी दवाई और डॉक्टर की आवश्यकता है।",
+      "action": "SPEECH_ASSIST",
+      "led_glyph": "CHECKMARK"
+    },
+    "9": {
+      "name": "pain",
+      "label": "Severe Pain",
+      "label_hi": "तेज दर्द हो रहा है",
+      "spoken_phrase": "I am experiencing severe pain, please help!",
+      "phrase_hi": "मुझे बहुत तेज दर्द हो रहा है, कृपया मदद कीजिए!",
+      "action": "SPEECH_ASSIST",
+      "led_glyph": "CHECKMARK"
+    },
+    "10": {
+      "name": "fan_on",
+      "label": "Turn On Fan",
+      "label_hi": "पंखा / AC चालू करें",
+      "spoken_phrase": "Please turn on the fan or air conditioning.",
+      "phrase_hi": "कृपया पंखा या एसी चालू कर दीजिए।",
+      "action": "RELAY_CH2_ON",
+      "led_glyph": "CHECKMARK"
+    },
+    "11": {
+      "name": "fan_off",
+      "label": "Turn Off Fan",
+      "label_hi": "पंखा / AC बंद करें",
+      "spoken_phrase": "Please turn off the fan or air conditioning.",
+      "phrase_hi": "कृपया पंखा या एसी बंद कर दीजिए।",
+      "action": "RELAY_CH2_OFF",
+      "led_glyph": "CHECKMARK"
+    },
+    "12": {
+      "name": "washroom",
+      "label": "Washroom Assistance",
+      "label_hi": "शौचालय सहायता चाहिए",
+      "spoken_phrase": "I need assistance to go to the washroom.",
+      "phrase_hi": "मुझे शौचालय जाने के लिए सहायता चाहिए।",
+      "action": "SPEECH_ASSIST",
+      "led_glyph": "CHECKMARK"
+    },
+    "13": {
+      "name": "call_family",
+      "label": "Call Family Caregiver",
+      "label_hi": "परिवार को कॉल करें",
+      "spoken_phrase": "Please call my family or caregiver.",
+      "phrase_hi": "कृपया मेरे परिवार या देखभालकर्ता को फोन करें।",
+      "action": "SPEECH_ASSIST",
+      "led_glyph": "CHECKMARK"
+    },
+    "14": {
+      "name": "sleep",
+      "label": "Sleep Rest",
+      "label_hi": "सोना / आराम करना है",
+      "spoken_phrase": "I want to rest and sleep now, thank you.",
+      "phrase_hi": "मैं अब आराम करना चाहता हूँ, धन्यवाद।",
+      "action": "SPEECH_ASSIST",
+      "led_glyph": "CHECKMARK"
+    }
   }
 }

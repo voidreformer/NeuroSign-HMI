@@ -1,7 +1,13 @@
 import cv2
-import mediapipe as mp
 import numpy as np
 from typing import Optional, Tuple
+
+try:
+    import mediapipe as mp
+    MEDIAPIPE_AVAILABLE = True
+except ImportError:
+    mp = None
+    MEDIAPIPE_AVAILABLE = False
 
 
 class LandmarkExtractor:
@@ -13,17 +19,19 @@ class LandmarkExtractor:
         model_complexity: int = 1,
         smoothing_alpha: float = 0.7,
     ):
-        self._mp_hands = mp.solutions.hands
-        self._mp_drawing = mp.solutions.drawing_utils
-        self._mp_drawing_styles = mp.solutions.drawing_styles
+        self._hands = None
+        if MEDIAPIPE_AVAILABLE and mp is not None:
+            self._mp_hands = mp.solutions.hands
+            self._mp_drawing = mp.solutions.drawing_utils
+            self._mp_drawing_styles = mp.solutions.drawing_styles
 
-        self._hands = self._mp_hands.Hands(
-            static_image_mode=False,
-            max_num_hands=max_num_hands,
-            min_detection_confidence=min_detection_confidence,
-            min_tracking_confidence=min_tracking_confidence,
-            model_complexity=model_complexity,
-        )
+            self._hands = self._mp_hands.Hands(
+                static_image_mode=False,
+                max_num_hands=max_num_hands,
+                min_detection_confidence=min_detection_confidence,
+                min_tracking_confidence=min_tracking_confidence,
+                model_complexity=model_complexity,
+            )
 
         self._smoothing_alpha = smoothing_alpha
         self._prev_landmarks: Optional[np.ndarray] = None
@@ -31,6 +39,9 @@ class LandmarkExtractor:
 
     def begin(self) -> bool:
         if self._initialized:
+            return True
+        if self._hands is None:
+            self._initialized = True
             return True
         try:
             test_frame = np.zeros((480, 640, 3), dtype=np.uint8)
@@ -44,7 +55,7 @@ class LandmarkExtractor:
         if not self._initialized:
             self.begin()
 
-        if frame is None or frame.size == 0:
+        if frame is None or frame.size == 0 or self._hands is None:
             return None, None, frame
 
         annotated_frame = frame.copy()

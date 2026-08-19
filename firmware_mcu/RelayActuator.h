@@ -10,16 +10,20 @@
 #pragma once
 #include <Arduino.h>
 
-static constexpr uint32_t RELAY_MAX_ON_MS = 30000UL;  // 30s maximum continuous ON
+static constexpr uint32_t RELAY_CH1_MAX_ON_MS = 0UL;        // 0 = Persistent (no auto-shutoff for room lights)
+static constexpr uint32_t RELAY_CH2_MAX_ON_MS = 30000UL;    // 30s auto-shutoff for emergency strobe/alarm
 
 class RelayActuator {
 public:
     /**
-     * @param ch1_pin GPIO pin for Channel 1 relay (default D6)
-     * @param ch2_pin GPIO pin for Channel 2 relay (default D7)
+     * @param ch1_pin GPIO pin for Channel 1 relay (default D6 - Room Light)
+     * @param ch2_pin GPIO pin for Channel 2 relay (default D7 - Emergency Siren)
      */
     RelayActuator(uint8_t ch1_pin = 6, uint8_t ch2_pin = 7)
-        : _pins{ch1_pin, ch2_pin}, _states{false, false}, _on_since{0, 0} {}
+        : _pins{ch1_pin, ch2_pin},
+          _states{false, false},
+          _on_since{0, 0},
+          _max_on_ms{RELAY_CH1_MAX_ON_MS, RELAY_CH2_MAX_ON_MS} {}
 
     void begin() {
         for (int i = 0; i < 2; i++) {
@@ -48,8 +52,12 @@ public:
 
         if (on) {
             _on_since[idx] = millis();
-            Serial.printf("[RELAY] CH%d -> ON (watchdog armed for %lu ms)\n",
-                          channel, (unsigned long)RELAY_MAX_ON_MS);
+            if (_max_on_ms[idx] > 0) {
+                Serial.printf("[RELAY] CH%d -> ON (watchdog armed for %lu ms)\n",
+                              channel, (unsigned long)_max_on_ms[idx]);
+            } else {
+                Serial.printf("[RELAY] CH%d -> ON (continuous mode)\n", channel);
+            }
         } else {
             _on_since[idx] = 0;
             Serial.printf("[RELAY] CH%d -> OFF\n", channel);
@@ -69,16 +77,16 @@ public:
 
     /**
      * @brief Watchdog update — must be called every loop() iteration.
-     *        Automatically de-energizes any relay that has been ON
-     *        for longer than RELAY_MAX_ON_MS (safety interlock).
+     *        Automatically de-energizes any relay with a non-zero timeout
+     *        that has been ON for longer than its max duration.
      */
     void update() {
         uint32_t now = millis();
         for (int i = 0; i < 2; i++) {
-            if (_states[i] && _on_since[i] > 0) {
-                if ((now - _on_since[i]) >= RELAY_MAX_ON_MS) {
+            if (_states[i] && _on_since[i] > 0 && _max_on_ms[i] > 0) {
+                if ((now - _on_since[i]) >= _max_on_ms[i]) {
                     Serial.printf("[RELAY] CH%d auto-shutoff triggered (watchdog %lu ms).\n",
-                                  i + 1, (unsigned long)RELAY_MAX_ON_MS);
+                                  i + 1, (unsigned long)_max_on_ms[i]);
                     setChannel(i + 1, false);
                 }
             }
@@ -89,4 +97,5 @@ private:
     uint8_t  _pins[2];
     bool     _states[2];
     uint32_t _on_since[2];
+    uint32_t _max_on_ms[2];
 };

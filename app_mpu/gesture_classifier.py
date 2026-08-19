@@ -9,10 +9,15 @@ from typing import Optional, Tuple, List
 import numpy as np
 
 try:
-    from tflite_runtime.interpreter import Interpreter
-    from tflite_runtime.interpreter import load_delegate
+    from tflite_runtime.interpreter import Interpreter, load_delegate
 except ImportError:
-    raise ImportError("tflite_runtime is required. Install with: pip install tflite-runtime")
+    try:
+        import tensorflow as tf
+        Interpreter = tf.lite.Interpreter
+        load_delegate = getattr(tf.lite.experimental, 'load_delegate', None)
+    except ImportError:
+        Interpreter = None
+        load_delegate = None
 
 logging.basicConfig(
     level=logging.INFO,
@@ -83,8 +88,19 @@ class GestureClassifier:
         with open(self.labels_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
+        self.gesture_metadata = {}
         if isinstance(data, dict):
-            self.labels = [data[str(i)] for i in range(len(data))]
+            if "gestures" in data and isinstance(data["gestures"], dict):
+                self.labels = [data["gestures"][str(i)]["label"] if isinstance(data["gestures"][str(i)], dict) else data["gestures"][str(i)] for i in range(len(data["gestures"]))]
+                self.gesture_metadata = data["gestures"]
+            elif "gestures" in data and isinstance(data["gestures"], list):
+                self.labels = data["gestures"]
+            elif "labels" in data and isinstance(data["labels"], dict):
+                self.labels = [data["labels"][str(i)] for i in range(len(data["labels"]))]
+            elif "labels" in data and isinstance(data["labels"], list):
+                self.labels = data["labels"]
+            else:
+                self.labels = [data[str(i)] for i in range(len(data))]
         elif isinstance(data, list):
             self.labels = data
         else:
@@ -115,8 +131,14 @@ class GestureClassifier:
                 logger.warning("GPU delegate not found at %s. Using CPU.", delegate_path)
                 warnings.warn("Qualcomm QNN delegate (libQnnTFLiteDelegate.so) not found. Using CPU inference.")
 
+        if Interpreter is None:
+            raise ImportError("Neither tflite-runtime nor tensorflow is installed on this environment.")
+
         try:
-            self.interpreter = Interpreter(model_path=self.model_path, experimental_delegates=delegates)
+            kwargs = {"model_path": self.model_path}
+            if delegates:
+                kwargs["experimental_delegates"] = delegates
+            self.interpreter = Interpreter(**kwargs)
             self.interpreter.allocate_tensors()
         except Exception as e:
             raise RuntimeError(f"Failed to load TFLite model: {e}") from e

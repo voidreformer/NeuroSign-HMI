@@ -73,13 +73,16 @@ def main():
                 mp_styles.get_default_hand_connections_style()
             )
 
-            landmarks = []
-            for lm in hand_landmarks.landmark:
-                landmarks.extend([lm.x, lm.y, lm.z])
-            landmarks = np.array(landmarks, dtype=np.float32)
+            raw_landmarks = np.array(
+                [[lm.x, lm.y, lm.z] for lm in hand_landmarks.landmark],
+                dtype=np.float32
+            )
+            # Subtract wrist (landmark 0) for translation invariance matching landmark_extractor.py
+            wrist = raw_landmarks[0:1]
+            landmarks_normalized = (raw_landmarks - wrist).flatten()
 
             if recording:
-                current_sequence.append(landmarks)
+                current_sequence.append(landmarks_normalized)
                 if len(current_sequence) >= WINDOW_SIZE:
                     dataset_X.append(np.array(current_sequence[:WINDOW_SIZE], dtype=np.float32))
                     dataset_y.append(current_class)
