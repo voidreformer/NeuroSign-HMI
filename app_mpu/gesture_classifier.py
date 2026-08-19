@@ -9,13 +9,17 @@ from typing import Optional, Tuple, List
 import numpy as np
 
 try:
-    from tflite_runtime.interpreter import Interpreter, load_delegate
+    import tensorflow as tf
+    Interpreter = tf.lite.Interpreter
+    load_delegate = getattr(getattr(tf, 'lite', None), 'experimental', None)
+    if load_delegate:
+        load_delegate = getattr(load_delegate, 'load_delegate', None)
 except ImportError:
     try:
-        import tensorflow as tf
-        Interpreter = tf.lite.Interpreter
-        load_delegate = getattr(tf.lite.experimental, 'load_delegate', None)
-    except ImportError:
+        import tflite_runtime.interpreter as tflite  # type: ignore[import-not-found,import-untyped]
+        Interpreter = tflite.Interpreter
+        load_delegate = getattr(tflite, 'load_delegate', None)
+    except (ImportError, AttributeError):
         Interpreter = None
         load_delegate = None
 
