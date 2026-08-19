@@ -1,7 +1,8 @@
 """
 NeuroSign-HMI: Blender 3D Gesture Generator & Library Exporter (15 Gestures)
-Runs inside Blender to generate rigged, keyframed 3D hand animations for all 15 gesture classes,
-exports standard .blend animation project files, and extracts wrist-invariant 3D coordinates into gesture_library_3d/.
+Builds complete 3D Hand Meshes with 21 connected joint nodes, finger segment bones,
+forearm base, metallic materials, realistic keyframing animations for all 15 gestures,
+and exports standard .blend animation project files and 3D datasets into gesture_library_3d/.
 """
 
 import os
@@ -15,7 +16,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 LIBRARY_DIR = os.path.join(SCRIPT_DIR, "gesture_library_3d")
 os.makedirs(LIBRARY_DIR, exist_ok=True)
 
-# 21 MediaPipe Standard Joint Names & Proportions
+# 21 MediaPipe Standard Joint Names & Rest Positions
 JOINT_NAMES = [
     "Wrist",
     "Thumb_CMC", "Thumb_MCP", "Thumb_IP", "Thumb_Tip",
@@ -23,6 +24,14 @@ JOINT_NAMES = [
     "Middle_MCP", "Middle_PIP", "Middle_DIP", "Middle_Tip",
     "Ring_MCP", "Ring_PIP", "Ring_DIP", "Ring_Tip",
     "Pinky_MCP", "Pinky_PIP", "Pinky_DIP", "Pinky_Tip"
+]
+
+HAND_BONES = [
+    ("Wrist", "Thumb_CMC"), ("Thumb_CMC", "Thumb_MCP"), ("Thumb_MCP", "Thumb_IP"), ("Thumb_IP", "Thumb_Tip"),
+    ("Wrist", "Index_MCP"), ("Index_MCP", "Index_PIP"), ("Index_PIP", "Index_DIP"), ("Index_DIP", "Index_Tip"),
+    ("Wrist", "Middle_MCP"), ("Middle_MCP", "Middle_PIP"), ("Middle_PIP", "Middle_DIP"), ("Middle_DIP", "Middle_Tip"),
+    ("Wrist", "Ring_MCP"), ("Ring_MCP", "Ring_PIP"), ("Ring_PIP", "Ring_DIP"), ("Ring_DIP", "Ring_Tip"),
+    ("Wrist", "Pinky_MCP"), ("Pinky_MCP", "Pinky_PIP"), ("Pinky_PIP", "Pinky_DIP"), ("Pinky_DIP", "Pinky_Tip")
 ]
 
 DEFAULT_REST_POSITIONS = {
@@ -36,19 +45,87 @@ DEFAULT_REST_POSITIONS = {
 
 
 def build_3d_hand_scene():
-    """Cleans scene and builds 21 visual 3D joint spheres with color materials."""
+    """Cleans scene and builds complete 3D Hand Model with joints, bone cylinders, and forearm."""
     bpy.ops.wm.read_factory_settings(use_empty=True)
 
-    mat = bpy.data.materials.new(name="HandJointMat")
+    # 1. Skin / Bone Material (Smooth Silver/Cyber Metallic)
+    mat_bone = bpy.data.materials.new(name="HandSkinMat")
+    mat_bone.use_nodes = True
+    bsdf = mat_bone.node_tree.nodes.get("Principled BSDF")
+    if bsdf:
+        if "Base Color" in bsdf.inputs:
+            bsdf.inputs["Base Color"].default_value = (0.75, 0.78, 0.84, 1.0)
+        if "Roughness" in bsdf.inputs:
+            bsdf.inputs["Roughness"].default_value = 0.35
+        if "Metallic" in bsdf.inputs:
+            bsdf.inputs["Metallic"].default_value = 0.15
+
+    # 2. Joint Accent Material (Cyan/Amber glowing markers)
+    mat_joint = bpy.data.materials.new(name="HandJointMat")
+    mat_joint.use_nodes = True
+    j_bsdf = mat_joint.node_tree.nodes.get("Principled BSDF")
+    if j_bsdf:
+        if "Base Color" in j_bsdf.inputs:
+            j_bsdf.inputs["Base Color"].default_value = (0.0, 0.85, 1.0, 1.0)
+
+    # 3. Create 21 Spherical Joint Nodes
     joint_objects = {}
     for name, pos in DEFAULT_REST_POSITIONS.items():
-        bpy.ops.mesh.primitive_uv_sphere_add(radius=0.012, location=pos)
+        rad = 0.014 if (name == "Wrist" or "MCP" in name) else 0.010
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=rad, location=pos)
         sphere = bpy.context.active_object
         sphere.name = f"Joint_{name}"
-        sphere.data.materials.append(mat)
+        sphere.data.materials.append(mat_joint if "Tip" in name or name == "Wrist" else mat_bone)
         joint_objects[name] = sphere
 
-    return joint_objects
+    # 4. Create Forearm Cylinder Base
+    bpy.ops.mesh.primitive_cylinder_add(radius=0.035, depth=0.10, location=(0.0, -0.05, 0.0))
+    forearm = bpy.context.active_object
+    forearm.name = "Mesh_Forearm"
+    forearm.data.materials.append(mat_bone)
+    joint_objects["Forearm"] = forearm
+
+    # 5. Create Bone Connector Cylinders
+    bone_objects = {}
+    for start_name, end_name in HAND_BONES:
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.008, depth=1.0, location=(0, 0, 0))
+        bone = bpy.context.active_object
+        bone.name = f"Bone_{start_name}_{end_name}"
+        bone.data.materials.append(mat_bone)
+        bone_objects[(start_name, end_name)] = bone
+
+    return joint_objects, bone_objects
+
+
+def update_bone_transforms(start_pt, end_pt, bone_obj):
+    """Positions, rotates, and scales a cylinder mesh between two 3D joint points."""
+    p1 = np.array(start_pt)
+    p2 = np.array(end_pt)
+    mid = (p1 + p2) / 2.0
+    vec = p2 - p1
+    dist = np.linalg.norm(vec)
+
+    if dist < 1e-6:
+        return
+
+    bone_obj.location = (mid[0], mid[1], mid[2])
+    bone_obj.scale = (1.0, 1.0, dist)
+
+    # Rotation towards direction vector
+    dir_vec = vec / dist
+    up = np.array([0, 0, 1])
+    axis = np.cross(up, dir_vec)
+    axis_len = np.linalg.norm(axis)
+    dot = np.dot(up, dir_vec)
+
+    if axis_len > 1e-5:
+        axis = axis / axis_len
+        angle = math.acos(max(-1.0, min(1.0, dot)))
+        bone_obj.rotation_mode = 'AXIS_ANGLE'
+        bone_obj.rotation_axis_angle = (angle, axis[0], axis[1], axis[2])
+    elif dot < 0:
+        bone_obj.rotation_mode = 'AXIS_ANGLE'
+        bone_obj.rotation_axis_angle = (math.pi, 1, 0, 0)
 
 
 def curl_point(base_mcp, pt, curl_factor):
@@ -61,8 +138,8 @@ def curl_point(base_mcp, pt, curl_factor):
 
 
 def animate_and_export_gesture(gid: int, name: str, label: str, spoken_phrase: str, action: str):
-    """Calculates realistic 3D joint keyframes, keyframes them in Blender, and exports .blend and .json."""
-    joint_objects = build_3d_hand_scene()
+    """Calculates realistic 3D joint keyframes, updates bone meshes in Blender, and exports .blend and .json."""
+    joint_objects, bone_objects = build_3d_hand_scene()
     num_frames = 30
     trajectory_3d_frames = []
 
@@ -71,7 +148,7 @@ def animate_and_export_gesture(gid: int, name: str, label: str, spoken_phrase: s
         bpy.context.scene.frame_set(t + 1)
         frame_raw_pts = {}
 
-        # 1. Base Wrist
+        # 1. Base Wrist Position & Rotation
         wrist_x, wrist_y, wrist_z = 0.0, 0.0, 0.0
 
         if gid == 0:  # Emergency: Rapid hand wave left/right
@@ -105,7 +182,7 @@ def animate_and_export_gesture(gid: int, name: str, label: str, spoken_phrase: s
 
         frame_raw_pts["Wrist"] = (wrist_x, wrist_y, wrist_z)
 
-        # 2. Compute Fingers based on gesture mechanics
+        # 2. Compute 20 Finger Joints based on gesture mechanics
         for j_name, base_pos in DEFAULT_REST_POSITIONS.items():
             if j_name == "Wrist":
                 continue
@@ -173,7 +250,6 @@ def animate_and_export_gesture(gid: int, name: str, label: str, spoken_phrase: s
                     curled = curl_point(mcp, (bx, by, bz), 0.85)
                     x, y, z = curled[0] + wrist_x, curled[1] + wrist_y, curled[2] + wrist_z
                 elif "Thumb" in j_name or "Index" in j_name:
-                    # Pinch pill together
                     x = bx * 0.6 + wrist_x
                     y = by * 0.8 + wrist_y + math.sin(phase * 2 * math.pi) * 0.02
 
@@ -199,7 +275,6 @@ def animate_and_export_gesture(gid: int, name: str, label: str, spoken_phrase: s
                     curled = curl_point(mcp, (bx, by, bz), 0.9)
                     x, y, z = curled[0] + wrist_x, curled[1] + wrist_y, curled[2] + wrist_z
                 else:
-                    # Stop motion
                     stop_factor = 1.0 - phase
                     x = bx + math.sin(stop_factor * math.pi) * 0.02 + wrist_x
 
@@ -208,7 +283,7 @@ def animate_and_export_gesture(gid: int, name: str, label: str, spoken_phrase: s
                 curled = curl_point(mcp, (bx, by, bz), 0.8)
                 x, y, z = curled[0] + wrist_x, curled[1] + wrist_y, curled[2] + wrist_z
 
-            elif gid == 13: # Call Family: Thumb & Pinky extended (Phone sign), middle 3 curled
+            elif gid == 13: # Call Family: Thumb & Pinky extended (Phone sign)
                 if "Index" in j_name or "Middle" in j_name or "Ring" in j_name:
                     mcp = DEFAULT_REST_POSITIONS[finger_group + "_MCP"]
                     curled = curl_point(mcp, (bx, by, bz), 0.95)
@@ -229,9 +304,22 @@ def animate_and_export_gesture(gid: int, name: str, label: str, spoken_phrase: s
             obj.location = (x, y, z)
             obj.keyframe_insert(data_path="location", index=-1)
 
-        # Set wrist keyframe
+        # Set wrist & forearm keyframes
         joint_objects["Wrist"].location = frame_raw_pts["Wrist"]
         joint_objects["Wrist"].keyframe_insert(data_path="location", index=-1)
+
+        joint_objects["Forearm"].location = (wrist_x, wrist_y - 0.05, wrist_z)
+        joint_objects["Forearm"].keyframe_insert(data_path="location", index=-1)
+
+        # Update all 20 Bone Meshes and insert keyframes
+        for start_name, end_name in HAND_BONES:
+            p1 = frame_raw_pts[start_name]
+            p2 = frame_raw_pts[end_name]
+            bone_obj = bone_objects[(start_name, end_name)]
+            update_bone_transforms(p1, p2, bone_obj)
+            bone_obj.keyframe_insert(data_path="location", index=-1)
+            bone_obj.keyframe_insert(data_path="scale", index=-1)
+            bone_obj.keyframe_insert(data_path="rotation_axis_angle", index=-1)
 
         # Normalize 21 landmarks relative to wrist
         w_pt = np.array(frame_raw_pts["Wrist"])
@@ -284,7 +372,7 @@ def animate_and_export_gesture(gid: int, name: str, label: str, spoken_phrase: s
     with open(json_filepath, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
-    print(f"[BLENDER ENGINE] Exported: '{label}' (ID {gid}) -> Blend: {gid}_{name}.blend & JSON: {gid}_{name}.json")
+    print(f"[BLENDER 3D HAND] Rendered: '{label}' (ID {gid}) -> Blend: {gid}_{name}.blend & JSON: {gid}_{name}.json")
 
 
 def main():
@@ -306,16 +394,16 @@ def main():
         (14, "sleep", "Sleep Rest", "I want to rest and sleep now, thank you.", "SPEECH_ASSIST"),
     ]
 
-    print("\n" + "=" * 70)
-    print("   Starting Blender 5.2 3D Gesture Hand Generator (15 Gestures)")
-    print("=" * 70)
+    print("\n" + "=" * 75)
+    print("   Starting Blender 5.2 Complete 3D Hand Mesh & Keyframe Generator")
+    print("=" * 75)
 
     for gid, name, label, phrase, action in gestures:
         animate_and_export_gesture(gid, name, label, phrase, action)
 
-    print("=" * 70)
-    print("   All 15 3D Gestures Rendered and Exported to gesture_library_3d/")
-    print("=" * 70 + "\n")
+    print("=" * 75)
+    print("   All 15 3D Hand Mesh Projects Rendered to gesture_library_3d/")
+    print("=" * 75 + "\n")
 
 
 if __name__ == "__main__":
