@@ -9,7 +9,7 @@
     --bg-surface-elevated: #151d2f;
     --border-subtle: rgba(255, 255, 255, 0.08);
     --border-bright: rgba(0, 240, 255, 0.3);
-    
+
     --cyan-glow: #00f0ff;
     --cyan-subtle: rgba(0, 240, 255, 0.12);
     --emerald-glow: #00ff88;
@@ -17,20 +17,20 @@
     --amber-glow: #ffb800;
     --crimson-glow: #ff3366;
     --purple-glow: #b34eff;
-    
+
     --text-primary: #f0f4fc;
     --text-secondary: #94a3b8;
     --text-muted: #64748b;
-    
+
     --font-heading: 'Space Grotesk', -apple-system, sans-serif;
     --font-body: 'Outfit', -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
-    
+
     --radius-sm: 8px;
     --radius-md: 14px;
     --radius-lg: 20px;
     --radius-full: 9999px;
-    
+
     --shadow-glow: 0 0 35px rgba(0, 240, 255, 0.15);
     --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
@@ -83,7 +83,7 @@ body {
 .bg-grid {
     position: fixed;
     inset: 0;
-    background-image: 
+    background-image:
         linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     background-size: 40px 40px;
@@ -141,8 +141,17 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(1.3); }
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(1.3);
+    }
 }
 
 .logo-icon {
@@ -583,6 +592,7 @@ canvas#handCanvas {
 .gesture-buttons-grid-15::-webkit-scrollbar {
     width: 4px;
 }
+
 .gesture-buttons-grid-15::-webkit-scrollbar-thumb {
     background: var(--border-subtle);
     border-radius: 4px;
@@ -619,9 +629,25 @@ canvas#handCanvas {
     box-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
 }
 
-.g-icon { font-size: 18px; }
-.g-name { font-size: 12px; font-weight: 600; color: #fff; line-height: 1.2; }
-.g-indic { font-size: 10px; color: #ffda73; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
+.g-icon {
+    font-size: 18px;
+}
+
+.g-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.2;
+}
+
+.g-indic {
+    font-size: 10px;
+    color: #ffda73;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
 
 /* ── Hardware Status Panel ───────────────────────────────────────────────── */
 .hardware-status-panel {
@@ -707,8 +733,13 @@ canvas#handCanvas {
 }
 
 @keyframes flash {
-    0% { opacity: 0.2; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 0.2;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 /* ── 3D Blender Studio Cards ─────────────────────────────────────────────── */
@@ -880,9 +911,19 @@ canvas#handCanvas {
     box-shadow: var(--shadow-glow);
 }
 
-.bridge-card strong { font-size: 13px; }
-.bridge-card code { font-size: 11px; color: var(--cyan-glow); }
-.bridge-card small { font-size: 10px; color: var(--emerald-glow); }
+.bridge-card strong {
+    font-size: 13px;
+}
+
+.bridge-card code {
+    font-size: 11px;
+    color: var(--cyan-glow);
+}
+
+.bridge-card small {
+    font-size: 10px;
+    color: var(--emerald-glow);
+}
 
 /* ── Telemetry Grid ──────────────────────────────────────────────────────── */
 .telemetry-grid {
@@ -927,8 +968,13 @@ canvas#handCanvas {
     font-weight: 600;
 }
 
-.tele-status.normal { color: var(--emerald-glow); }
-.tele-status.active { color: var(--cyan-glow); }
+.tele-status.normal {
+    color: var(--emerald-glow);
+}
+
+.tele-status.active {
+    color: var(--cyan-glow);
+}
 
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 .footer {
@@ -977,8 +1023,19 @@ canvas#handCanvas {
 
 /* ── Mobile Responsiveness ───────────────────────────────────────────────── */
 @media (max-width: 900px) {
-    .simulator-grid { grid-template-columns: 1fr; }
-    .arch-container { grid-template-columns: 1fr; }
-    .hero-title { font-size: 38px; }
-    .gesture-buttons-grid-15 { grid-template-columns: repeat(2, 1fr); }
+    .simulator-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .arch-container {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-title {
+        font-size: 38px;
+    }
+
+    .gesture-buttons-grid-15 {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
