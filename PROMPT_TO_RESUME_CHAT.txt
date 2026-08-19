@@ -1,0 +1,24 @@
+=============================================================================
+NEUROSIGN-HMI: PROMPT TO RESUME THIS CHAT ON ANY OTHER PC / WORKSTATION
+=============================================================================
+
+When you open this project on your Mentor's PC or any other computer,
+simply copy and paste the following line into your AI Assistant chat:
+
+-----------------------------------------------------------------------------
+Please read @CONVERSATION_EXPORT.md and @HOW_TO_RESTORE_SESSION.md and let's continue our work.
+-----------------------------------------------------------------------------
+
+WHAT HAPPENS WHEN YOU SEND THIS:
+1. The AI assistant will immediately load 100% full memory and context of the
+   entire NeuroSign-HMI multi-modal ecosystem.
+2. All 15 dynamic gestures, 11 Indic regional languages, 1st-person .WAV audio
+   prompts, wearable glove hub telemetry, and wiring pinouts will be remembered.
+3. You can continue directly from where we left off without repeating anything!
+
+=============================================================================
+USEFUL QUICK LINKS:
+- Live Interactive Web Portal: https://voidreformer.github.io/NeuroSign-HMI/
+- GitHub Repository: https://github.com/voidreformer/NeuroSign-HMI
+- Official Submission PDF: Arduino_Challenge_Project_Report_Completed.pdf
+=============================================================================
