@@ -39,3 +39,6 @@ Thumbs.db
 *.hex
 *.bin
 *.elf
+
+all_chat_sessions/raw_brains/
+
