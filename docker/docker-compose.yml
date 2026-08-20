@@ -13,11 +13,14 @@ services:
       - "/dev/video0:/dev/video0"
       - "/dev/snd:/dev/snd"
       - "/dev/dri:/dev/dri"
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
     volumes:
       - "/var/run/arduino-router.sock:/var/run/arduino-router.sock"
       - "/tmp/.X11-unix:/tmp/.X11-unix"
       - "../app_mpu:/app/app_mpu"
       - "../models:/app/models"
+      - "../audio_prompts:/app/audio_prompts"
+      - "../wearable_glove_hub:/app/wearable_glove_hub"
     environment:
       - DISPLAY=:0
       - PYTHONUNBUFFERED=1
