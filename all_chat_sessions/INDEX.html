@@ -3,158 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroSign-HMI — Chat Sessions Navigator Hub</title>
+    <title>NeuroSign-HMI — All Conversations Navigator Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0b0d17;
-            --card-bg: #14172b;
-            --accent: #00d2ff;
-            --accent-glow: rgba(0, 210, 255, 0.3);
-            --text-main: #f0f4f8;
-            --text-dim: #9ba3b4;
-            --border: #232946;
+            --bg: #070913;
+            --panel: #0f1322;
+            --panel-hover: #161c33;
+            --border: #1f2744;
+            --cyan: #00d2ff;
+            --green: #10b981;
+            --amber: #f59e0b;
+            --purple: #8b5cf6;
+            --text: #f3f4f6;
+            --text-dim: #9ca3af;
         }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: var(--bg);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0;
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
             padding: 40px 20px;
+            line-height: 1.6;
         }
         .container {
-            max-width: 1000px;
+            max-width: 1080px;
             margin: 0 auto;
         }
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 45px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border);
+        }
+        .brand-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: inline-block;
         }
         h1 {
-            font-size: 2.4rem;
-            color: var(--accent);
-            text-shadow: 0 0 20px var(--accent-glow);
-            margin-bottom: 10px;
+            font-size: 2.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #00d2ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
         }
-        p.subtitle {
+        p.desc {
             color: var(--text-dim);
             font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+        .stat-box {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 20px;
+            text-align: center;
+        }
+        .stat-val {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--cyan);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .stat-lbl {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .grid {
             display: grid;
             gap: 20px;
         }
         .card {
-            background: var(--card-bg);
+            background: var(--panel);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            transition: all 0.3s ease;
+            border-radius: 14px;
+            padding: 26px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            overflow: hidden;
         }
         .card:hover {
-            border-color: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px var(--accent-glow);
+            background: var(--panel-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 210, 255, 0.12);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .badge {
-            background: rgba(0, 210, 255, 0.15);
-            color: var(--accent);
-            padding: 4px 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
             border-radius: 6px;
-            font-size: 0.8rem;
-            font-family: monospace;
-            display: inline-block;
-            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        .turns-badge {
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
         }
         .card h2 {
-            margin: 0 0 10px 0;
-            font-size: 1.3rem;
+            font-size: 1.35rem;
+            margin-bottom: 10px;
+            color: #ffffff;
         }
         .card p {
             color: var(--text-dim);
             font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
-        .actions a {
-            display: inline-block;
-            background: var(--accent);
-            color: #0b0d17;
+        .btn-view {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #00d2ff 0%, #0077ff 100%);
+            color: #070913;
             text-decoration: none;
-            padding: 8px 18px;
-            border-radius: 8px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.9rem;
+            padding: 10px 22px;
+            border-radius: 8px;
             transition: opacity 0.2s;
         }
-        .actions a:hover {
+        .btn-view:hover {
             opacity: 0.9;
         }
         footer {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 60px;
             color: var(--text-dim);
             font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            padding-top: 25px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🧭 NeuroSign-HMI Sessions Navigator</h1>
-            <p class="subtitle">Complete Master Archive of All Antigravity AI Engineering Sessions</p>
+            <span class="brand-tag">🤖 Antigravity AI Knowledge Architecture</span>
+            <h1>NeuroSign-HMI Conversations Hub</h1>
+            <p class="desc">Interactive repository indexing all 5 engineering sessions, dual-brain AI models, wearable glove firmware, sensor calibration and Linux OS guides.</p>
         </header>
+
+        <div class="stats-bar">
+            <div class="stat-box">
+                <div class="stat-val">5</div>
+                <div class="stat-lbl">Core Conversations</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val">1,130+</div>
+                <div class="stat-lbl">Total Dialog Turns</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-val">100%</div>
+                <div class="stat-lbl">Context Synced</div>
+            </div>
+        </div>
+
         <div class="grid">
 
-            <div class="card">
-                <span class="badge">SESSION 01 • 195 DIALOG TURNS</span>
-                <h2>Session 01: Dual-Brain Architecture, TFLite GPU Model & MessagePack RPC</h2>
-                <p>Foundation of Arduino UNO Q dual-brain architecture (Qualcomm QRB2210 Linux + STM32U585 Zephyr), MediaPipe 3D pipeline, and 1D-LSTM INT8 GPU delegate.</p>
-                <div class="actions">
-                    <a href="markdown_transcripts/SESSION_01_DualBrain_Architecture_And_TFLite_Model.md" target="_blank">📄 View Full Transcript (.md)</a>
+            <div class="card" style="border-left: 4px solid #00d2ff;">
+                <div class="card-header">
+                    <span class="badge" style="background: #00d2ff22; color: #00d2ff; border: 1px solid #00d2ff44;">MAIN CONVERSATION 1</span>
+                    <span class="turns-badge">💬 496 Dialog Turns</span>
                 </div>
+                <h2>Master Unification: 15 Gestures, 11 Indic Languages, Studio WAV Voice Engine, Contest Report & Linux OS Guide</h2>
+                <p>Full multi-modal unification, expanding gesture dictionary to 15 gestures, 11 Indian regional languages offline voice engine, 34 studio 1st-person WAV files, contest report PDF, and Arduino UNO Q Linux OS Master Guide.</p>
+                <a href="markdown_transcripts/CONVERSATION_01_Master_Orchestrator_15Gestures_11Languages_LinuxGuide.md" class="btn-view">
+                    <span>📄 Open Full Transcript (.md)</span>
+                </a>
             </div>
     
-            <div class="card">
-                <span class="badge">SESSION 02 • 125 DIALOG TURNS</span>
-                <h2>Session 02: Touch UI, Sensor Bus, 24GHz Radar & Relay Actuation</h2>
-                <p>Implementation of SmartElex 5-inch touch UI, Adafruit SGP40 VOC, INA219 power telemetry, HLK-LD2410C radar, and dual opto-relays.</p>
-                <div class="actions">
-                    <a href="markdown_transcripts/SESSION_02_TouchUI_Sensors_Radar_Relays.md" target="_blank">📄 View Full Transcript (.md)</a>
+            <div class="card" style="border-left: 4px solid #10b981;">
+                <div class="card-header">
+                    <span class="badge" style="background: #10b98122; color: #10b981; border: 1px solid #10b98144;">MAIN CONVERSATION 2</span>
+                    <span class="turns-badge">💬 463 Dialog Turns</span>
                 </div>
+                <h2>Smart Glove Wearable Ecosystem: Nano TX Glove, ESP32-S3 Medical Hub & UNO Q Waveform Plotter</h2>
+                <p>Development of Arduino Nano TX Glove (3x flex sensors + ADXL345 accelerometer + SSD1306 OLED + 433MHz RF), ESP32-S3 FreeRTOS Medical Station, UNO Q UART Waveform Plotter, and local cyber web dashboard.</p>
+                <a href="markdown_transcripts/CONVERSATION_02_Wearable_Smart_Glove_Medical_Hub.md" class="btn-view">
+                    <span>📄 Open Full Transcript (.md)</span>
+                </a>
             </div>
     
-            <div class="card">
-                <span class="badge">SESSION 03 • 36 DIALOG TURNS</span>
-                <h2>Session 03: Video Demonstration Script, Submission Form & Report Inspection</h2>
-                <p>Robu.in contest rules analysis, 5-minute unedited continuous video script formulation, and official submission template completion.</p>
-                <div class="actions">
-                    <a href="markdown_transcripts/SESSION_03_VideoScript_Contest_Report.md" target="_blank">📄 View Full Transcript (.md)</a>
+            <div class="card" style="border-left: 4px solid #f59e0b;">
+                <div class="card-header">
+                    <span class="badge" style="background: #f59e0b22; color: #f59e0b; border: 1px solid #f59e0b44;">MAIN CONVERSATION 3</span>
+                    <span class="turns-badge">💬 125 Dialog Turns</span>
                 </div>
+                <h2>Sensors Telemetry Bus, Environmental Calibration, Circuit Diagrams & Opto-Relay Actuation</h2>
+                <p>Calibration and real-time integration of Adafruit SGP40 VOC air quality, INA219 power telemetry, DHT22 temp/humidity, HLK-LD2410C 24GHz radar, dual opto-relays, and complete 1.8V/3.3V/5V wiring diagrams.</p>
+                <a href="markdown_transcripts/CONVERSATION_03_SensorBus_Calibration_Relays_Wiring.md" class="btn-view">
+                    <span>📄 Open Full Transcript (.md)</span>
+                </a>
             </div>
     
-            <div class="card">
-                <span class="badge">SESSION 04 • 463 DIALOG TURNS</span>
-                <h2>Session 04: Master 15-Gestures, 11 Indic Languages, Studio WAV, Wearable Hub & Linux Guide</h2>
-                <p>Integration of 15 gestures, 11 Indian languages, studio WAV voice engine, wearable glove fusion, submission report PDF, and Arduino UNO Q Linux OS Master Guide.</p>
-                <div class="actions">
-                    <a href="markdown_transcripts/SESSION_04_Master_15Gestures_11Languages_WearableHub_LinuxGuide.md" target="_blank">📄 View Full Transcript (.md)</a>
+            <div class="card" style="border-left: 4px solid #8b5cf6;">
+                <div class="card-header">
+                    <span class="badge" style="background: #8b5cf622; color: #8b5cf6; border: 1px solid #8b5cf644;">SUPPORTING CONVERSATION 4</span>
+                    <span class="turns-badge">💬 36 Dialog Turns</span>
                 </div>
+                <h2>Interactive Cyber Web Dashboard & Live 60 FPS Hand Simulation Preview</h2>
+                <p>Creation of interactive browser-based dashboard, HTML5 Canvas 60 FPS hand skeleton simulator for GitHub Pages, and patient UI telemetry view.</p>
+                <a href="markdown_transcripts/CONVERSATION_04_Cyber_Dashboard_Web_Preview.md" class="btn-view">
+                    <span>📄 Open Full Transcript (.md)</span>
+                </a>
             </div>
     
-            <div class="card">
-                <span class="badge">SESSION 05 • 463 DIALOG TURNS</span>
-                <h2>Session 05: Wearable Smart Glove Biomedical Base Station (Rudra Ecosystem)</h2>
-                <p>Arduino Nano TX Glove (3x flex + ADXL345), ESP32-S3 FreeRTOS Medical Hub, UNO Q Waveform Plotter, and SoftAP Cyber Dashboard.</p>
-                <div class="actions">
-                    <a href="markdown_transcripts/SESSION_05_Wearable_Smart_Glove_Ecosystem.md" target="_blank">📄 View Full Transcript (.md)</a>
+            <div class="card" style="border-left: 4px solid #ec4899;">
+                <div class="card-header">
+                    <span class="badge" style="background: #ec489922; color: #ec4899; border: 1px solid #ec489944;">SUPPORTING CONVERSATION 5</span>
+                    <span class="turns-badge">💬 51 Dialog Turns</span>
                 </div>
+                <h2>Firmware Diagnostics, UART Stream Debugging & Standby Function Logic</h2>
+                <p>UART telemetry schema validation, stream buffer overflow fixes, JSON packet serialization, and multi-state gesture machine stabilization.</p>
+                <a href="markdown_transcripts/CONVERSATION_05_Firmware_Diagnostics_Debugging.md" class="btn-view">
+                    <span>📄 Open Full Transcript (.md)</span>
+                </a>
             </div>
     
         </div>
+
         <footer>
-            NeuroSign-HMI • Arduino Physical AI Challenge India 2026 • Rudra Attri Pandey
+            NeuroSign-HMI • Arduino Physical AI Challenge India 2026 • Developed by Rudra Attri Pandey
         </footer>
     </div>
 </body>
